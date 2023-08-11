@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.selfStudy.LibrarySystemBackend.models.Identification;
 
 
-@RestController
+
 @RequestMapping("/api/v1/identification")
 public interface IdentificationApi {
 	@PostMapping
