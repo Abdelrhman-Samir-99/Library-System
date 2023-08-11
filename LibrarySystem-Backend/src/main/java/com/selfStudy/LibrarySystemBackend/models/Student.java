@@ -10,11 +10,18 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Student {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,7 +29,9 @@ public class Student {
 	@Column(name = "id", columnDefinition = "uuid", updatable = false, nullable = false)
 	private UUID id;
 	@ManyToOne
+	@JoinColumn(name = "identification_id")
 	private Identification identification;
 	private LocalDate joinDate;
 	private LocalDate graduationDate;
+
 }
