@@ -1,16 +1,19 @@
 package com.selfStudy.LibrarySystemBackend.services.implementations;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.selfStudy.LibrarySystemBackend.exceptions.ResourceNotFoundException;
 import com.selfStudy.LibrarySystemBackend.models.Identification;
 import com.selfStudy.LibrarySystemBackend.repositories.IdentificationRepository;
+import com.selfStudy.LibrarySystemBackend.services.interfaces.IdentificationService;
 
 @Service
-public class IdentificationServiceImpl implements com.selfStudy.LibrarySystemBackend.services.interfaces.IdentificationService {
+public class IdentificationServiceImpl implements IdentificationService {
 
 	private IdentificationRepository identificationRepository;
 
@@ -34,5 +37,11 @@ public class IdentificationServiceImpl implements com.selfStudy.LibrarySystemBac
 		} else {
 			throw new IllegalArgumentException("Record not found");
 		}
+	}
+
+	@Override
+	public Identification getIdentification(UUID identificationId) {
+		return identificationRepository.findById(identificationId)
+								   .orElseThrow(() -> new ResourceNotFoundException("Record not found with id: " + identificationId));
 	}
 }
