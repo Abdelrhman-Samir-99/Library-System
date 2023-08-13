@@ -1,7 +1,6 @@
 package com.selfStudy.LibrarySystemBackend.controllers.implementations;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.selfStudy.LibrarySystemBackend.controllers.interfaces.IdentificationApi;
@@ -19,11 +18,20 @@ public class IdentificationController implements IdentificationApi {
 	}
 
 	@Override
-	public Identification createNewIdentification(@RequestBody Identification identification) {
+	public Identification createNewIdentification(Identification identification) {
 		if(identification == null) {
 			return null; // This should throw an exception.
 		}
 
 		return identificationService.createNewIdentification(identification);
+	}
+
+	@Override
+	public Identification updateIdentification(Identification identification) {
+		if(identification == null) {
+			return null; // This should throw an exception.
+		}
+
+		return identificationService.updateIdentification(identification);
 	}
 }

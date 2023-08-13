@@ -43,4 +43,25 @@ class IdentificationControllerTest {
 		assertEquals(result.getFirstName(), expected.getFirstName());
 		assertEquals(result.getLastName(), expected.getLastName());
 	}
+
+	@Test
+	public void updateIdentification_CallingUpdateIdentificationEndPoint_ReturnsTheUpdatedIdentity() {
+		// Arrange
+		Identification expected = Identification.builder().id(UUID.fromString("77365c0c-3867-11ee-be56-0242ac120002"))
+												.socialNumber("123-323-232-1231").phoneNumber("01273188179").email("testing@yopamail.com")
+												.firstName("Abdelrahman").lastName("Samir").build();
+
+		when(identificationService.updateIdentification(expected)).thenReturn(expected);
+
+		// Act
+		Identification result = identificationController.updateIdentification(expected);
+
+		// Assert
+		assertEquals(result.getId(), expected.getId());
+		assertEquals(result.getSocialNumber(), expected.getSocialNumber());
+		assertEquals(result.getPhoneNumber(), expected.getPhoneNumber());
+		assertEquals(result.getEmail(), expected.getEmail());
+		assertEquals(result.getFirstName(), expected.getFirstName());
+		assertEquals(result.getLastName(), expected.getLastName());
+	}
 }

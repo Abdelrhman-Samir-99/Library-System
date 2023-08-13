@@ -18,14 +18,14 @@ import com.selfStudy.LibrarySystemBackend.services.implementations.Identificatio
 @ExtendWith(MockitoExtension.class)
 public class IdentificationServiceImplTest {
 
-	@InjectMocks
+	@InjectMocks // TODO: figure out whether it is possible to use the abstraction instead of the concrete class, also whether I should or not.
 	IdentificationServiceImpl identificationService;
 
 	@Mock
 	IdentificationRepository identificationRepository;
 
 	@Test
-	public void createNewIndentification_WhenCallingCorrespondingApi_ReturnsTheCreatedIdentification() {
+	public void createNewIdentification_WhenCallingCorrespondingApi_ReturnsTheCreatedIdentification() {
 		// Arrange
 		Identification expected = Identification.builder().id(UUID.fromString("77365c0c-3867-11ee-be56-0242ac120002"))
 												.socialNumber("123-323-232-1231").phoneNumber("01273188179").email("testing@yopamail.com")
@@ -35,6 +35,27 @@ public class IdentificationServiceImplTest {
 
 		// Act
 		Identification result = identificationService.createNewIdentification(expected);
+
+		// Assert
+		assertEquals(result.getId(), expected.getId());
+		assertEquals(result.getSocialNumber(), expected.getSocialNumber());
+		assertEquals(result.getPhoneNumber(), expected.getPhoneNumber());
+		assertEquals(result.getEmail(), expected.getEmail());
+		assertEquals(result.getFirstName(), expected.getFirstName());
+		assertEquals(result.getLastName(), expected.getLastName());
+	}
+
+	@Test
+	public void updateIdentification_CallingUpdateIdentificationEndPoint_ReturnsTheUpdatedIdentification() {
+		// Arrange
+		Identification expected = Identification.builder().id(UUID.fromString("77365c0c-3867-11ee-be56-0242ac120002"))
+												.socialNumber("123-323-232-1231").phoneNumber("01273188179").email("testing@yopamail.com")
+												.firstName("Abdelrahman").lastName("Samir").build();
+
+		when(identificationRepository.save(expected)).thenReturn(expected);
+
+		// Act
+		Identification result = identificationService.updateIdentification(expected);
 
 		// Assert
 		assertEquals(result.getId(), expected.getId());

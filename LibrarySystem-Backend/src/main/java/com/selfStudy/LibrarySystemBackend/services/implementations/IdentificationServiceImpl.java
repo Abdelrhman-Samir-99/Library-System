@@ -1,5 +1,8 @@
 package com.selfStudy.LibrarySystemBackend.services.implementations;
 
+import java.util.Optional;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,5 +22,17 @@ public class IdentificationServiceImpl implements com.selfStudy.LibrarySystemBac
 	@Override
 	public Identification createNewIdentification(Identification identification) {
 		return identificationRepository.save(identification);
+	}
+
+	@Override
+	public Identification updateIdentification(Identification identification) {
+		Optional<Identification> optionalIdentification = identificationRepository.findById(identification.getId());
+		if (optionalIdentification.isPresent()) {
+			Identification existedIdentification = optionalIdentification.get();
+			BeanUtils.copyProperties(identification, existedIdentification);
+			return identificationRepository.save(existedIdentification);
+		} else {
+			throw new IllegalArgumentException("Record not found");
+		}
 	}
 }
