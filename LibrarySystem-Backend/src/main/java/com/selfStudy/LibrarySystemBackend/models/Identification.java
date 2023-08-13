@@ -1,5 +1,6 @@
 package com.selfStudy.LibrarySystemBackend.models;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -23,7 +24,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Identification {
+public class Identification implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@UuidGenerator(style = UuidGenerator.Style.TIME)
