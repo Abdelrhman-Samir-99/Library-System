@@ -2,6 +2,8 @@ package com.selfStudy.LibrarySystemBackend.controllers.interfaces;
 
 import java.util.UUID;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,5 +24,8 @@ public interface IdentificationApi {
 	Identification updateIdentification(@RequestBody Identification expected);
 
 	@GetMapping("/{identificationId}")
-	Identification getIdentification(@PathVariable UUID identificationId);
+	Identification getIdentificationById(@PathVariable UUID identificationId);
+
+	@DeleteMapping("/{identificationId}")
+	ResponseEntity<Void> deleteIdentificationById(@PathVariable UUID identificationId);
 }

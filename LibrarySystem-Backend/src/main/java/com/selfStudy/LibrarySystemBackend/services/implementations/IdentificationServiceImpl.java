@@ -39,8 +39,15 @@ public class IdentificationServiceImpl implements IdentificationService {
 	}
 
 	@Override
-	public Identification getIdentification(UUID identificationId) {
+	public Identification getIdentificationById(UUID identificationId) {
 		return identificationRepository.findById(identificationId)
 								   .orElseThrow(() -> new ResourceNotFoundException("Record not found with id: " + identificationId));
+	}
+
+	@Override
+	public void deleteIdentificationById(UUID identificationId) {
+		Identification existedIdentification = identificationRepository.findById(identificationId)
+				.orElseThrow(() -> new ResourceNotFoundException("Record not found with id: " + identificationId));
+		identificationRepository.delete(existedIdentification);
 	}
 }

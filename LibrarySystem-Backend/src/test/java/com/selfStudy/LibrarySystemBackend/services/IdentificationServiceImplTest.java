@@ -1,5 +1,7 @@
 package com.selfStudy.LibrarySystemBackend.services;
 
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
@@ -39,7 +41,7 @@ public class IdentificationServiceImplTest {
 	}
 
 	@Test
-	public void updateIdentification_CallingUpdateIdentificationEndPoint_ReturnsTheUpdatedIdentification() {
+	public void updateIdentification_CallingUpdateIdentificationEndPointById_ReturnsTheUpdatedIdentification() {
 		// Arrange
 		Identification expected = TestUtils.createIdentificationObject();
 
@@ -54,7 +56,7 @@ public class IdentificationServiceImplTest {
 	}
 
 	@Test
-	public void getIdentification_CallingGetIdentificationEndPoint_ReturnsTheIdentityIfExists() {
+	public void getIdentification_CallingGetIdentificationEndPointById_ReturnsTheIdentityIfExists() {
 		// Arrange
 		Identification expected = TestUtils.createIdentificationObject();
 
@@ -62,9 +64,26 @@ public class IdentificationServiceImplTest {
 		when(identificationRepository.findById(expected.getId())).thenReturn(Optional.of(expected));
 
 		// Act
-		Identification result = identificationService.getIdentification(expected.getId());
+		Identification result = identificationService.getIdentificationById(expected.getId());
 
 		// Assert
 		TestUtils.compareIdentificationObjects(expected, result);
+	}
+
+	@Test
+	public void deleteIdentification_CallingDeleteIdentificationEndPointById_ReturnsTheIdentityIfExists() {
+		// Arrange
+		Identification expected = TestUtils.createIdentificationObject();
+
+
+		when(identificationRepository.findById(expected.getId())).thenReturn(Optional.of(expected));
+		doNothing().when(identificationRepository).delete(expected);
+
+		// Act
+		identificationService.deleteIdentificationById(expected.getId());
+
+		// Assert
+		verify(identificationRepository).delete(expected);
+		verify(identificationRepository).findById(expected.getId());
 	}
 }

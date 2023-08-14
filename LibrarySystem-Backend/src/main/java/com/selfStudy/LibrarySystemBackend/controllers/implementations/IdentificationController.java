@@ -3,6 +3,7 @@ package com.selfStudy.LibrarySystemBackend.controllers.implementations;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.selfStudy.LibrarySystemBackend.controllers.interfaces.IdentificationApi;
@@ -38,11 +39,17 @@ public class IdentificationController implements IdentificationApi {
 	}
 
 	@Override
-	public Identification getIdentification(UUID identificationId) {
+	public Identification getIdentificationById(UUID identificationId) {
 		if(identificationId == null) {
 			return null; // This should throw an exception.
 		}
 
-		return identificationService.getIdentification(identificationId);
+		return identificationService.getIdentificationById(identificationId);
+	}
+
+	@Override
+	public ResponseEntity<Void> deleteIdentificationById(UUID identificationId) {
+		identificationService.deleteIdentificationById(identificationId);
+		return ResponseEntity.noContent().build();
 	}
 }

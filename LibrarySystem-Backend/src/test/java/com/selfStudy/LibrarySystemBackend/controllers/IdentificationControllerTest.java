@@ -1,6 +1,10 @@
 package com.selfStudy.LibrarySystemBackend.controllers;
 
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,7 +40,7 @@ class IdentificationControllerTest {
 	}
 
 	@Test
-	public void updateIdentification_CallingUpdateIdentificationEndPoint_ReturnsTheUpdatedIdentityIfExists() {
+	public void updateIdentification_CallingUpdateIdentificationEndPointById_ReturnsTheUpdatedIdentityIfExists() {
 		// Arrange
 		Identification expected = TestUtils.createIdentificationObject();
 
@@ -50,16 +54,31 @@ class IdentificationControllerTest {
 	}
 
 	@Test
-	public void getIdentification_CallingGetIdentificationEndPoint_ReturnsTheIdentityIfExists() {
+	public void getIdentification_CallingGetIdentificationEndPointById_ReturnsTheIdentityIfExists() {
 		// Arrange
 		Identification expected = TestUtils.createIdentificationObject();
 
-		when(identificationService.getIdentification(expected.getId())).thenReturn(expected);
+		when(identificationService.getIdentificationById(expected.getId())).thenReturn(expected);
 
 		// Act
-		Identification result = identificationController.getIdentification(expected.getId());
+		Identification result = identificationController.getIdentificationById(expected.getId());
 
 		// Assert
 		TestUtils.compareIdentificationObjects(expected, result);
+	}
+
+	@Test
+	public void deleteIdentification_CallingDeleteIdentificationEndPointById_DeleteTheRecordFromDatabase() {
+		// Arrange
+		UUID identificationId = UUID.randomUUID();
+
+		doNothing().when(identificationService).deleteIdentificationById(identificationId);
+
+		// Act
+		identificationController.deleteIdentificationById(identificationId);
+
+		// Assert
+
+		verify(identificationService).deleteIdentificationById(identificationId);
 	}
 }
