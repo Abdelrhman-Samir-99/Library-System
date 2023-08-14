@@ -30,13 +30,12 @@ public class IdentificationServiceImpl implements IdentificationService {
 	@Override
 	public Identification updateIdentification(Identification identification) {
 		Optional<Identification> optionalIdentification = identificationRepository.findById(identification.getId());
-		if (optionalIdentification.isPresent()) {
-			Identification existedIdentification = optionalIdentification.get();
-			BeanUtils.copyProperties(identification, existedIdentification);
-			return identificationRepository.save(existedIdentification);
-		} else {
-			throw new IllegalArgumentException("Record not found");
-		}
+
+		Identification existedIdentification = optionalIdentification
+													.orElseThrow(() -> new ResourceNotFoundException("Record not found with id: " + identification.getId()));
+		BeanUtils.copyProperties(identification, existedIdentification);
+
+		return identificationRepository.save(existedIdentification);
 	}
 
 	@Override

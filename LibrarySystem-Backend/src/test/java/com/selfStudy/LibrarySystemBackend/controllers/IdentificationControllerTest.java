@@ -1,9 +1,6 @@
 package com.selfStudy.LibrarySystemBackend.controllers;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
-
-import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.selfStudy.LibrarySystemBackend.controllers.implementations.IdentificationController;
 import com.selfStudy.LibrarySystemBackend.models.Identification;
 import com.selfStudy.LibrarySystemBackend.services.interfaces.IdentificationService;
+import com.selfStudy.LibrarySystemBackend.utils.TestUtils;
 
 @ExtendWith(MockitoExtension.class)
 class IdentificationControllerTest {
@@ -26,9 +24,7 @@ class IdentificationControllerTest {
 	@Test
 	public void createIdentification_CorrespondingApi_ReturnsTheCreatedIdentity() {
 		// Arrange
-		Identification expected = Identification.builder().id(UUID.fromString("77365c0c-3867-11ee-be56-0242ac120002"))
-												.socialNumber("123-323-232-1231").phoneNumber("01273188179").email("testing@yopamail.com")
-												.firstName("Abdelrahman").lastName("Samir").build();
+		Identification expected = TestUtils.createIdentificationObject();
 
 		when(identificationService.createNewIdentification(expected)).thenReturn(expected);
 
@@ -36,20 +32,13 @@ class IdentificationControllerTest {
 		Identification result = identificationController.createNewIdentification(expected);
 
 		// Assert
-		assertEquals(result.getId(), expected.getId());
-		assertEquals(result.getSocialNumber(), expected.getSocialNumber());
-		assertEquals(result.getPhoneNumber(), expected.getPhoneNumber());
-		assertEquals(result.getEmail(), expected.getEmail());
-		assertEquals(result.getFirstName(), expected.getFirstName());
-		assertEquals(result.getLastName(), expected.getLastName());
+		TestUtils.compareIdentificationObjects(expected, result);
 	}
 
 	@Test
 	public void updateIdentification_CallingUpdateIdentificationEndPoint_ReturnsTheUpdatedIdentityIfExists() {
 		// Arrange
-		Identification expected = Identification.builder().id(UUID.fromString("77365c0c-3867-11ee-be56-0242ac120002"))
-												.socialNumber("123-323-232-1231").phoneNumber("01273188179").email("testing@yopamail.com")
-												.firstName("Abdelrahman").lastName("Samir").build();
+		Identification expected = TestUtils.createIdentificationObject();
 
 		when(identificationService.updateIdentification(expected)).thenReturn(expected);
 
@@ -57,20 +46,13 @@ class IdentificationControllerTest {
 		Identification result = identificationController.updateIdentification(expected);
 
 		// Assert
-		assertEquals(result.getId(), expected.getId());
-		assertEquals(result.getSocialNumber(), expected.getSocialNumber());
-		assertEquals(result.getPhoneNumber(), expected.getPhoneNumber());
-		assertEquals(result.getEmail(), expected.getEmail());
-		assertEquals(result.getFirstName(), expected.getFirstName());
-		assertEquals(result.getLastName(), expected.getLastName());
+		TestUtils.compareIdentificationObjects(expected, result);
 	}
 
 	@Test
 	public void getIdentification_CallingGetIdentificationEndPoint_ReturnsTheIdentityIfExists() {
 		// Arrange
-		Identification expected = Identification.builder().id(UUID.fromString("77365c0c-3867-11ee-be56-0242ac120002"))
-												.socialNumber("123-323-232-1231").phoneNumber("01273188179").email("testing@yopamail.com")
-												.firstName("Abdelrahman").lastName("Samir").build();
+		Identification expected = TestUtils.createIdentificationObject();
 
 		when(identificationService.getIdentification(expected.getId())).thenReturn(expected);
 
@@ -78,11 +60,6 @@ class IdentificationControllerTest {
 		Identification result = identificationController.getIdentification(expected.getId());
 
 		// Assert
-		assertEquals(result.getId(), expected.getId());
-		assertEquals(result.getSocialNumber(), expected.getSocialNumber());
-		assertEquals(result.getPhoneNumber(), expected.getPhoneNumber());
-		assertEquals(result.getEmail(), expected.getEmail());
-		assertEquals(result.getFirstName(), expected.getFirstName());
-		assertEquals(result.getLastName(), expected.getLastName());
+		TestUtils.compareIdentificationObjects(expected, result);
 	}
 }
