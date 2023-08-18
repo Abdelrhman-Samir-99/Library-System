@@ -16,14 +16,16 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
-@Entity
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@Getter
+@Setter
+@Entity
 public class Identification implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,7 +41,6 @@ public class Identification implements Serializable {
 
 	@OneToMany(mappedBy = "identification", cascade = CascadeType.REMOVE)
 	Set<Employee> employeeSet = new HashSet<>();
-
 
 	@OneToMany(mappedBy = "identification", cascade = CascadeType.REMOVE)
 	Set<Student> studentSet = new HashSet<>();
