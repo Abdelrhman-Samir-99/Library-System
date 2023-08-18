@@ -18,13 +18,13 @@ import com.selfStudy.LibrarySystemBackend.models.Identification;
 @RequestMapping("/api/v1/identification")
 public interface IdentificationApi {
 	@PostMapping
-	Identification createNewIdentification(@RequestBody Identification identification);
+	ResponseEntity<Identification> createNewIdentification(@RequestBody Identification identification);
 
 	@PutMapping("/update")
-	Identification updateIdentification(@RequestBody Identification expected);
+	ResponseEntity<Identification> updateIdentification(@RequestBody Identification expected);
 
 	@GetMapping("/{identificationId}")
-	Identification getIdentificationById(@PathVariable UUID identificationId);
+	ResponseEntity<Identification> getIdentificationById(@PathVariable UUID identificationId);
 
 	@DeleteMapping("/{identificationId}")
 	ResponseEntity<Void> deleteIdentificationById(@PathVariable UUID identificationId);
