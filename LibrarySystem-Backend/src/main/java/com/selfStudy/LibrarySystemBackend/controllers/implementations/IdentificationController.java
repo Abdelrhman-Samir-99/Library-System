@@ -24,7 +24,7 @@ public class IdentificationController implements IdentificationApi {
 	@Override
 	public ResponseEntity<Identification> createNewIdentification(Identification identification) {
 		if(identification == null) {
-			return null; // This should throw an exception.
+			throw new IllegalArgumentException("Identification Object is null");
 		}
 
 		return new ResponseEntity<>(identificationService.createNewIdentification(identification), HttpStatus.CREATED);
@@ -33,7 +33,7 @@ public class IdentificationController implements IdentificationApi {
 	@Override
 	public ResponseEntity<Identification> updateIdentification(Identification identification) {
 		if(identification == null) {
-			return null; // This should throw an exception.
+			throw new IllegalArgumentException("Identification Object is null");
 		}
 
 		return new ResponseEntity<>(identificationService.updateIdentification(identification), HttpStatus.OK);
@@ -42,7 +42,7 @@ public class IdentificationController implements IdentificationApi {
 	@Override
 	public ResponseEntity<Identification> getIdentificationById(UUID identificationId) {
 		if(identificationId == null) {
-			return null; // This should throw an exception.
+			throw new IllegalArgumentException("Identification ID is null");
 		}
 
 		return new ResponseEntity<>(identificationService.getIdentificationById(identificationId), HttpStatus.FOUND);
@@ -50,6 +50,10 @@ public class IdentificationController implements IdentificationApi {
 
 	@Override
 	public ResponseEntity<Void> deleteIdentificationById(UUID identificationId) {
+		if(identificationId == null) {
+			throw new IllegalArgumentException("Identification ID is null");
+		}
+
 		identificationService.deleteIdentificationById(identificationId);
 		return ResponseEntity.noContent().build();
 	}
