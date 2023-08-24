@@ -1,6 +1,7 @@
 package com.selfStudy.LibrarySystemBackend.models;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -38,6 +39,8 @@ public class Identification implements Serializable {
 	private String email;
 	private String phoneNumber;
 	private String address;
+	private LocalDate creationDate;
+	private LocalDate removeDate;
 
 	@OneToMany(mappedBy = "identification", cascade = CascadeType.REMOVE)
 	Set<Employee> employeeSet = new HashSet<>();

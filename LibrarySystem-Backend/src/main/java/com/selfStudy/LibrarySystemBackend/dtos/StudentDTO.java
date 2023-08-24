@@ -20,5 +20,7 @@ public class StudentDTO {
 	private String lastName;
 	private LocalDate joinDate;
 	private LocalDate graduationDate;
+	private LocalDate creationDate;
+	private LocalDate removeDate;
 	private UUID identificationId;
 }

@@ -37,4 +37,6 @@ public class Student {
 	private Identification identification;
 	private LocalDate joinDate;
 	private LocalDate graduationDate;
+	private LocalDate creationDate;
+	private LocalDate removeDate;
 }
