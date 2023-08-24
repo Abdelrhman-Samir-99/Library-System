@@ -4,23 +4,23 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.selfStudy.LibrarySystemBackend.exceptions.ResourceNotFoundException;
+import com.selfStudy.LibrarySystemBackend.mappers.IdentificationMapper;
 import com.selfStudy.LibrarySystemBackend.models.Identification;
 import com.selfStudy.LibrarySystemBackend.repositories.IdentificationRepository;
 import com.selfStudy.LibrarySystemBackend.services.interfaces.IdentificationService;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class IdentificationServiceImpl implements IdentificationService {
 
-	private IdentificationRepository identificationRepository;
+	private final IdentificationRepository identificationRepository;
+	private final IdentificationMapper identificationMapper;
 
-	@Autowired // TODO: can I use Lombok to remove this constructor?
-	public IdentificationServiceImpl(IdentificationRepository identificationRepository) {
-		this.identificationRepository = identificationRepository;
-	}
 
 	@Override
 	public Identification createNewIdentification(Identification identification) {

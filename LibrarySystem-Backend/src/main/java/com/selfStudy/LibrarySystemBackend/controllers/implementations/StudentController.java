@@ -1,6 +1,5 @@
 package com.selfStudy.LibrarySystemBackend.controllers.implementations;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,15 +8,15 @@ import com.selfStudy.LibrarySystemBackend.controllers.interfaces.StudentApi;
 import com.selfStudy.LibrarySystemBackend.models.Student;
 import com.selfStudy.LibrarySystemBackend.services.interfaces.StudentService;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
+@RequiredArgsConstructor
 public class StudentController implements StudentApi {
 
-	StudentService studentService;
+	private final StudentService studentService;
 
-	@Autowired
-	public StudentController(StudentService studentService) {
-		this.studentService = studentService;
-	}
+
 
 	@Override
 	public ResponseEntity<Student> createNewStudent(Student student) {

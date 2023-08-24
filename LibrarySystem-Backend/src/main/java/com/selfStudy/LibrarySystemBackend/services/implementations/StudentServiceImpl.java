@@ -1,21 +1,20 @@
 package com.selfStudy.LibrarySystemBackend.services.implementations;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.selfStudy.LibrarySystemBackend.mappers.StudentMapper;
 import com.selfStudy.LibrarySystemBackend.models.Student;
 import com.selfStudy.LibrarySystemBackend.repositories.StudentRepository;
 import com.selfStudy.LibrarySystemBackend.services.interfaces.StudentService;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService {
 
-	StudentRepository studentRepository;
-
-	@Autowired
-	public StudentServiceImpl(StudentRepository studentRepository) {
-		this.studentRepository = studentRepository;
-	}
+	private final StudentRepository studentRepository;
+	private final StudentMapper studentMapper;
 
 	@Override
 	public Student createNewStudent(Student student) {

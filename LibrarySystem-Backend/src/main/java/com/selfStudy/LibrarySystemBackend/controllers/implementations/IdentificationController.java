@@ -2,7 +2,6 @@ package com.selfStudy.LibrarySystemBackend.controllers.implementations;
 
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,15 +10,14 @@ import com.selfStudy.LibrarySystemBackend.controllers.interfaces.IdentificationA
 import com.selfStudy.LibrarySystemBackend.models.Identification;
 import com.selfStudy.LibrarySystemBackend.services.interfaces.IdentificationService;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
+@RequiredArgsConstructor
 public class IdentificationController implements IdentificationApi {
 
 	private final IdentificationService identificationService;
 
-	@Autowired
-	public IdentificationController(IdentificationService identificationService) {
-		this.identificationService = identificationService;
-	}
 
 	@Override
 	public ResponseEntity<Identification> createNewIdentification(Identification identification) {
