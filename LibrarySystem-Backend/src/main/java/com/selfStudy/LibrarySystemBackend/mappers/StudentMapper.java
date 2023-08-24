@@ -7,7 +7,7 @@ import com.selfStudy.LibrarySystemBackend.dtos.StudentDTO;
 import com.selfStudy.LibrarySystemBackend.models.Student;
 
 @Mapper
-public interface StudentMapper extends DefaultMapper <Student, StudentDTO> {
+public interface StudentMapper {
 	@Mapping(source = "identificationId", target = "identification.id")
 	Student mapStudentDtoToStudent(StudentDTO studentDTO);
 
