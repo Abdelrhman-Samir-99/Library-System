@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import com.selfStudy.LibrarySystemBackend.dtos.IdentificationDTO;
 import com.selfStudy.LibrarySystemBackend.exceptions.ResourceNotFoundException;
 import com.selfStudy.LibrarySystemBackend.mappers.IdentificationMapper;
 import com.selfStudy.LibrarySystemBackend.models.Identification;
@@ -23,25 +24,29 @@ public class IdentificationServiceImpl implements IdentificationService {
 
 
 	@Override
-	public Identification createNewIdentification(Identification identification) {
-		return identificationRepository.save(identification);
+	public IdentificationDTO createNewIdentification(IdentificationDTO identificationDto) {
+		Identification identification = identificationMapper.mapDtoToIdentification(identificationDto);
+		return identificationMapper.mapIdentificationToDto(identificationRepository.save(identification));
 	}
 
 	@Override
-	public Identification updateIdentification(Identification identification) {
-		Optional<Identification> optionalIdentification = identificationRepository.findById(identification.getId());
+	public IdentificationDTO updateIdentification(IdentificationDTO identificationDto) {
+		Optional<Identification> optionalIdentification = identificationRepository.findById(identificationDto.getId());
 
 		Identification existedIdentification = optionalIdentification
-													.orElseThrow(() -> new ResourceNotFoundException("Record not found with id: " + identification.getId()));
+													.orElseThrow(() -> new ResourceNotFoundException("Record not found with id: " + identificationDto.getId()));
+		Identification identification = identificationMapper.mapDtoToIdentification(identificationDto);
+
 		BeanUtils.copyProperties(identification, existedIdentification);
 
-		return identificationRepository.save(existedIdentification);
+		return identificationMapper.mapIdentificationToDto(identificationRepository.save(existedIdentification));
 	}
 
 	@Override
-	public Identification getIdentificationById(UUID identificationId) {
-		return identificationRepository.findById(identificationId)
+	public IdentificationDTO getIdentificationById(UUID identificationId) {
+		Identification identification = identificationRepository.findById(identificationId)
 								   .orElseThrow(() -> new ResourceNotFoundException("Record not found with id: " + identificationId));
+		return identificationMapper.mapIdentificationToDto(identification);
 	}
 
 	@Override

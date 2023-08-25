@@ -2,13 +2,13 @@ package com.selfStudy.LibrarySystemBackend.services.interfaces;
 
 import java.util.UUID;
 
-import com.selfStudy.LibrarySystemBackend.models.Identification;
+import com.selfStudy.LibrarySystemBackend.dtos.IdentificationDTO;
 
 public interface IdentificationService {
-	Identification createNewIdentification(Identification identification);
+	IdentificationDTO createNewIdentification(IdentificationDTO identification);
 
-	Identification updateIdentification(Identification expected);
+	IdentificationDTO updateIdentification(IdentificationDTO expected);
 
-	Identification getIdentificationById(UUID identificationId);
+	IdentificationDTO getIdentificationById(UUID identificationId);
 	void deleteIdentificationById(UUID identificationId);
 }

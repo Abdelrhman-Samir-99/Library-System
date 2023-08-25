@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.selfStudy.LibrarySystemBackend.controllers.interfaces.IdentificationApi;
-import com.selfStudy.LibrarySystemBackend.models.Identification;
+import com.selfStudy.LibrarySystemBackend.dtos.IdentificationDTO;
 import com.selfStudy.LibrarySystemBackend.services.interfaces.IdentificationService;
 
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ public class IdentificationController implements IdentificationApi {
 
 
 	@Override
-	public ResponseEntity<Identification> createNewIdentification(Identification identification) {
+	public ResponseEntity<IdentificationDTO> createNewIdentification(IdentificationDTO identification) {
 		if(identification == null) {
 			throw new IllegalArgumentException("Identification Object is null");
 		}
@@ -29,7 +29,7 @@ public class IdentificationController implements IdentificationApi {
 	}
 
 	@Override
-	public ResponseEntity<Identification> updateIdentification(Identification identification) {
+	public ResponseEntity<IdentificationDTO> updateIdentification(IdentificationDTO identification) {
 		if(identification == null) {
 			throw new IllegalArgumentException("Identification Object is null");
 		}
@@ -38,7 +38,7 @@ public class IdentificationController implements IdentificationApi {
 	}
 
 	@Override
-	public ResponseEntity<Identification> getIdentificationById(UUID identificationId) {
+	public ResponseEntity<IdentificationDTO> getIdentificationById(UUID identificationId) {
 		if(identificationId == null) {
 			throw new IllegalArgumentException("Identification ID is null");
 		}

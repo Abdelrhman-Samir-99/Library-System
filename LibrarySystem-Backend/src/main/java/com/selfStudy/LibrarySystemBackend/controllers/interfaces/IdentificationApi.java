@@ -11,20 +11,18 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.selfStudy.LibrarySystemBackend.models.Identification;
-
-
+import com.selfStudy.LibrarySystemBackend.dtos.IdentificationDTO;
 
 @RequestMapping("/api/v1/identification")
 public interface IdentificationApi {
 	@PostMapping
-	ResponseEntity<Identification> createNewIdentification(@RequestBody Identification identification);
+	ResponseEntity<IdentificationDTO> createNewIdentification(@RequestBody IdentificationDTO identification);
 
 	@PutMapping("/update")
-	ResponseEntity<Identification> updateIdentification(@RequestBody Identification expected);
+	ResponseEntity<IdentificationDTO> updateIdentification(@RequestBody IdentificationDTO expected);
 
 	@GetMapping("/{identificationId}")
-	ResponseEntity<Identification> getIdentificationById(@PathVariable UUID identificationId);
+	ResponseEntity<IdentificationDTO> getIdentificationById(@PathVariable UUID identificationId);
 
 	@DeleteMapping("/{identificationId}")
 	ResponseEntity<Void> deleteIdentificationById(@PathVariable UUID identificationId);
