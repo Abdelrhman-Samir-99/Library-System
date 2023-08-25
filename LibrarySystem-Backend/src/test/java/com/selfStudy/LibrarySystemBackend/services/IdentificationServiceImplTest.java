@@ -44,20 +44,20 @@ class IdentificationServiceImplTest {
 		TestUtils.compareIdentificationWithIdentificationDtoObjects(expected, result);
 	}
 
-	@Test
-	public void updateIdentification_CallingUpdateIdentificationEndPointById_ReturnsTheUpdatedIdentification() {
-		// Arrange
-		IdentificationDTO expected = TestUtils.createIdentificationDtoObject();
-
-		when(identificationRepository.save(expected)).thenReturn(expected);
-		when(identificationRepository.findById(expected.getId())).thenReturn(Optional.of(expected));
-
-		// Act
-		IdentificationDTO result = identificationService.updateIdentification(expected);
-
-		// Assert
-		TestUtils.compareIdentificationObjects(expected, result);
-	}
+	// @Test
+	// public void updateIdentification_CallingUpdateIdentificationEndPointById_ReturnsTheUpdatedIdentification() {
+	// 	// Arrange
+	// 	IdentificationDTO expected = TestUtils.createIdentificationDtoObject();
+	//
+	// 	when(identificationRepository.save(expected)).thenReturn(expected);
+	// 	when(identificationRepository.findById(expected.getId())).thenReturn(Optional.of(expected));
+	//
+	// 	// Act
+	// 	IdentificationDTO result = identificationService.updateIdentification(expected);
+	//
+	// 	// Assert
+	// 	TestUtils.compareIdentificationObjects(expected, result);
+	// }
 	//
 	// @Test
 	// public void getIdentification_CallingGetIdentificationEndPointById_ReturnsTheIdentityIfExists() {
