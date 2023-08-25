@@ -1,5 +1,7 @@
 package com.selfStudy.LibrarySystemBackend.dtos;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -14,7 +16,10 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class StudentDTO {
+public class StudentDTO implements Serializable {
+	@Serial
+	private static final long serialVersionUID = 1251369952720664243L;
+
 	private UUID id;
 	private String firstName;
 	private String lastName;

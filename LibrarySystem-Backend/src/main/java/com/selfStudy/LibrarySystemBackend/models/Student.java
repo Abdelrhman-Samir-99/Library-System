@@ -1,5 +1,7 @@
 package com.selfStudy.LibrarySystemBackend.models;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -26,7 +28,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Student {
+public class Student implements Serializable {
+	@Serial
+	private static final long serialVersionUID = -1752395381585981376L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@UuidGenerator(style = UuidGenerator.Style.TIME)

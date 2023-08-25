@@ -17,7 +17,7 @@ import com.selfStudy.LibrarySystemBackend.services.implementations.StudentServic
 import com.selfStudy.LibrarySystemBackend.utils.TestUtils;
 
 @ExtendWith(MockitoExtension.class)
-public class StudentServiceImplTest {
+class StudentServiceImplTest {
 	@InjectMocks // TODO: figure out whether it is possible to use the abstraction instead of the concrete class, also whether I should or not.
 	StudentServiceImpl studentService;
 
@@ -28,7 +28,7 @@ public class StudentServiceImplTest {
 	StudentMapper studentMapper;
 
 	@Test
-	public void createNewIdentification_WhenCallingCorrespondingApi_ReturnsTheCreatedIdentification() {
+	 void createNewIdentification_WhenCallingCorrespondingApi_ReturnsTheCreatedIdentification() {
 		// Arrange
 		StudentDTO inputStudent = TestUtils.createStudentDtoObject();
 		Student student = TestUtils.createStudentObject();

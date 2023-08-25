@@ -16,7 +16,7 @@ import com.selfStudy.LibrarySystemBackend.services.implementations.Identificatio
 import com.selfStudy.LibrarySystemBackend.utils.TestUtils;
 
 @ExtendWith(MockitoExtension.class)
-public class IdentificationServiceImplTest {
+class IdentificationServiceImplTest {
 
 	@InjectMocks
 	IdentificationServiceImpl identificationService;
@@ -28,7 +28,7 @@ public class IdentificationServiceImplTest {
 	IdentificationMapper identificationMapper;
 
 	@Test
-	public void createNewIdentification_WhenCallingCorrespondingApi_ReturnsTheCreatedIdentification() {
+	 void createNewIdentification_WhenCallingCorrespondingApi_ReturnsTheCreatedIdentification() {
 		// Arrange
 		Identification expected = TestUtils.createIdentificationObject();
 		IdentificationDTO inputIdentification = TestUtils.createIdentificationDtoObject();

@@ -17,7 +17,7 @@ import com.selfStudy.LibrarySystemBackend.services.interfaces.StudentService;
 import com.selfStudy.LibrarySystemBackend.utils.TestUtils;
 
 @ExtendWith(MockitoExtension.class)
-public class StudentControllerTest {
+class StudentControllerTest {
 	@InjectMocks
 	StudentController studentController;
 
@@ -25,7 +25,7 @@ public class StudentControllerTest {
 	StudentService studentService;
 
 	@Test
-	public void createNewStudent_CorrespondingApi_ReturnsTheCreatedStudent() {
+	 void createNewStudent_CorrespondingApi_ReturnsTheCreatedStudent() {
 		// Arrange
 		StudentDTO expected = TestUtils.createStudentDtoObject();
 

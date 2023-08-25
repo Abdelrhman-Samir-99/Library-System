@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class IdentificationServiceImpl implements IdentificationService {
 
+	public static final String RECORD_NOT_FOUND_WITH_ID = "Record not found with id: ";
 	private final IdentificationRepository identificationRepository;
 	private final IdentificationMapper identificationMapper;
 
@@ -34,7 +35,8 @@ public class IdentificationServiceImpl implements IdentificationService {
 		Optional<Identification> optionalIdentification = identificationRepository.findById(identificationDto.getId());
 
 		Identification existedIdentification = optionalIdentification
-													.orElseThrow(() -> new ResourceNotFoundException("Record not found with id: " + identificationDto.getId()));
+													.orElseThrow(() -> new ResourceNotFoundException(
+															RECORD_NOT_FOUND_WITH_ID + identificationDto.getId()));
 		Identification identification = identificationMapper.mapDtoToIdentification(identificationDto);
 
 		BeanUtils.copyProperties(identification, existedIdentification);
@@ -45,14 +47,14 @@ public class IdentificationServiceImpl implements IdentificationService {
 	@Override
 	public IdentificationDTO getIdentificationById(UUID identificationId) {
 		Identification identification = identificationRepository.findById(identificationId)
-								   .orElseThrow(() -> new ResourceNotFoundException("Record not found with id: " + identificationId));
+								   .orElseThrow(() -> new ResourceNotFoundException(RECORD_NOT_FOUND_WITH_ID + identificationId));
 		return identificationMapper.mapIdentificationToDto(identification);
 	}
 
 	@Override
 	public void deleteIdentificationById(UUID identificationId) {
 		Identification existedIdentification = identificationRepository.findById(identificationId)
-				.orElseThrow(() -> new ResourceNotFoundException("Record not found with id: " + identificationId));
+				.orElseThrow(() -> new ResourceNotFoundException(RECORD_NOT_FOUND_WITH_ID + identificationId));
 		identificationRepository.delete(existedIdentification);
 	}
 }

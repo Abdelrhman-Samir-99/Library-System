@@ -29,7 +29,7 @@ class IdentificationControllerTest {
 	IdentificationService identificationService;
 
 	@Test
-	public void createIdentification_CorrespondingApi_ReturnsTheCreatedIdentity() {
+	 void createIdentification_CorrespondingApi_ReturnsTheCreatedIdentity() {
 		// Arrange
 		IdentificationDTO expected = TestUtils.createIdentificationDtoObject();
 
@@ -45,7 +45,7 @@ class IdentificationControllerTest {
 	}
 
 	@Test
-	public void updateIdentification_CallingUpdateIdentificationEndPointById_ReturnsTheUpdatedIdentityIfExists() {
+	 void updateIdentification_CallingUpdateIdentificationEndPointById_ReturnsTheUpdatedIdentityIfExists() {
 		// Arrange
 		IdentificationDTO expected = TestUtils.createIdentificationDtoObject();
 
@@ -60,7 +60,7 @@ class IdentificationControllerTest {
 	}
 
 	@Test
-	public void getIdentification_CallingGetIdentificationEndPointById_ReturnsTheIdentityIfExists() {
+	 void getIdentification_CallingGetIdentificationEndPointById_ReturnsTheIdentityIfExists() {
 		// Arrange
 		IdentificationDTO expected = TestUtils.createIdentificationDtoObject();
 
@@ -75,7 +75,7 @@ class IdentificationControllerTest {
 	}
 
 	@Test
-	public void deleteIdentification_CallingDeleteIdentificationEndPointById_DeleteTheRecordFromDatabase() {
+	 void deleteIdentification_CallingDeleteIdentificationEndPointById_DeleteTheRecordFromDatabase() {
 		// Arrange
 		UUID identificationId = UUID.randomUUID();
 
