@@ -2,8 +2,6 @@ package com.selfStudy.LibrarySystemBackend.models;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 import org.hibernate.annotations.UuidGenerator;
@@ -14,7 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,9 +40,9 @@ public class Identification implements Serializable {
 	private LocalDate creationDate;
 	private LocalDate removeDate;
 
-	@OneToMany(mappedBy = "identification", cascade = CascadeType.REMOVE)
-	Set<Employee> employeeSet = new HashSet<>();
+	@OneToOne(mappedBy = "identification", cascade = CascadeType.ALL)
+	Employee employee;
 
-	@OneToMany(mappedBy = "identification", cascade = CascadeType.REMOVE)
-	Set<Student> studentSet = new HashSet<>();
+	@OneToOne(mappedBy = "identification", cascade = CascadeType.ALL)
+	Student student;
 }
