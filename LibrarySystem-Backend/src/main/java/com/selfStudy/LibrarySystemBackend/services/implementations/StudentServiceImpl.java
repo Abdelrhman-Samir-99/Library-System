@@ -2,6 +2,7 @@ package com.selfStudy.LibrarySystemBackend.services.implementations;
 
 import org.springframework.stereotype.Service;
 
+import com.selfStudy.LibrarySystemBackend.dtos.StudentDTO;
 import com.selfStudy.LibrarySystemBackend.mappers.StudentMapper;
 import com.selfStudy.LibrarySystemBackend.models.Student;
 import com.selfStudy.LibrarySystemBackend.repositories.StudentRepository;
@@ -17,7 +18,9 @@ public class StudentServiceImpl implements StudentService {
 	private final StudentMapper studentMapper;
 
 	@Override
-	public Student createNewStudent(Student student) {
-		return studentRepository.save(student);
+	public StudentDTO createNewStudent(StudentDTO studentDto) {
+		Student student = studentMapper.mapStudentDtoToStudent(studentDto);
+
+		return studentMapper.mapStudentToStudentDto(studentRepository.save(student));
 	}
 }

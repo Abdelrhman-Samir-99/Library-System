@@ -12,7 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.selfStudy.LibrarySystemBackend.controllers.implementations.StudentController;
-import com.selfStudy.LibrarySystemBackend.models.Student;
+import com.selfStudy.LibrarySystemBackend.dtos.StudentDTO;
 import com.selfStudy.LibrarySystemBackend.services.interfaces.StudentService;
 import com.selfStudy.LibrarySystemBackend.utils.TestUtils;
 
@@ -27,15 +27,15 @@ public class StudentControllerTest {
 	@Test
 	public void createNewStudent_CorrespondingApi_ReturnsTheCreatedStudent() {
 		// Arrange
-		Student expected = TestUtils.createStudentObject();
+		StudentDTO expected = TestUtils.createStudentDtoObject();
 
 		when(studentService.createNewStudent(expected)).thenReturn(expected);
 
 		// Act
-		ResponseEntity<Student> result = studentController.createNewStudent(expected);
+		ResponseEntity<StudentDTO> result = studentController.createNewStudent(expected);
 
 		// Assert
-		TestUtils.compareStudentObjects(expected, result.getBody());
+		TestUtils.compareStudentDtoObjects(expected, result.getBody());
 
 		Assertions.assertEquals(HttpStatus.CREATED, result.getStatusCode());
 	}

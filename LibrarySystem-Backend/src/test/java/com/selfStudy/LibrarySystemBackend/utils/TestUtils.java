@@ -6,10 +6,14 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 import com.selfStudy.LibrarySystemBackend.dtos.IdentificationDTO;
+import com.selfStudy.LibrarySystemBackend.dtos.StudentDTO;
 import com.selfStudy.LibrarySystemBackend.models.Identification;
 import com.selfStudy.LibrarySystemBackend.models.Student;
 
 public class TestUtils {
+	public static final String IDENTIFICATION_UUID = "77365c0c-3867-11ee-be56-0242ac120002";
+	public static final String STUDENT_UUID = "9fbe6561-586c-423a-9706-cf1989762d5a";
+
 	public static void compareIdentificationWithIdentificationDtoObjects(Identification expected, IdentificationDTO result) {
 		assertEquals(expected.getId(), result.getId());
 		assertEquals(expected.getSocialNumber(), result.getSocialNumber());
@@ -28,16 +32,39 @@ public class TestUtils {
 		assertEquals(expected.getLastName(), result.getLastName());
 	}
 
+	public static void compareIdentificationObjects(Identification expected, Identification result) {
+		assertEquals(expected.getId(), result.getId());
+		assertEquals(expected.getSocialNumber(), result.getSocialNumber());
+		assertEquals(expected.getPhoneNumber(), result.getPhoneNumber());
+		assertEquals(expected.getEmail(), result.getEmail());
+		assertEquals(expected.getFirstName(), result.getFirstName());
+		assertEquals(expected.getLastName(), result.getLastName());
+	}
+
 	public static void compareStudentObjects(Student expected, Student result) {
 		assertEquals(expected.getId(), result.getId());
 		assertEquals(expected.getJoinDate(), result.getJoinDate());
 		assertEquals(expected.getGraduationDate(), result.getGraduationDate());
-		// compareIdentificationObjects(expected.getIdentification(), result.getIdentification());
+		compareIdentificationObjects(expected.getIdentification(), result.getIdentification());
+	}
+
+	public static void compareStudentWithStudentDtoObjects(Student expected, StudentDTO result) {
+		assertEquals(expected.getId(), result.getId());
+		assertEquals(expected.getJoinDate(), result.getJoinDate());
+		assertEquals(expected.getGraduationDate(), result.getGraduationDate());
+		assertEquals(expected.getIdentification().getId(), result.getIdentificationId());
+	}
+
+	public static void compareStudentDtoObjects(StudentDTO expected, StudentDTO result) {
+		assertEquals(expected.getId(), result.getId());
+		assertEquals(expected.getJoinDate(), result.getJoinDate());
+		assertEquals(expected.getGraduationDate(), result.getGraduationDate());
+		assertEquals(expected.getIdentificationId(), result.getIdentificationId());
 	}
 
 	public static IdentificationDTO createIdentificationDtoObject() {
 		return IdentificationDTO.builder()
-								.id(UUID.fromString("77365c0c-3867-11ee-be56-0242ac120002"))
+								.id(UUID.fromString(IDENTIFICATION_UUID))
 								.socialNumber("123-323-232-1231")
 								.phoneNumber("01273188179")
 								.email("testing@yopamail.com")
@@ -48,7 +75,7 @@ public class TestUtils {
 
 	public static Identification createIdentificationObject() {
 		return Identification.builder()
-								.id(UUID.fromString("77365c0c-3867-11ee-be56-0242ac120002"))
+								.id(UUID.fromString(IDENTIFICATION_UUID))
 								.socialNumber("123-323-232-1231")
 								.phoneNumber("01273188179")
 								.email("testing@yopamail.com")
@@ -61,10 +88,21 @@ public class TestUtils {
 		LocalDate dateNow = LocalDate.now();
 		Identification identification = new Identification();
 		return Student.builder()
-					  .id(UUID.fromString("77365c0c-3867-11ee-be56-0242ac120002"))
+					  .id(UUID.fromString(IDENTIFICATION_UUID))
 					  .joinDate(dateNow)
 					  .graduationDate(dateNow)
 					  .identification(identification)
+					  .build();
+	}
+
+	public static StudentDTO createStudentDtoObject() {
+		LocalDate dateNow = LocalDate.now();
+		Identification identification = new Identification();
+		return StudentDTO.builder()
+					  .id(UUID.fromString(STUDENT_UUID))
+					  .joinDate(dateNow)
+					  .graduationDate(dateNow)
+					  .identificationId(UUID.fromString(IDENTIFICATION_UUID))
 					  .build();
 	}
 }

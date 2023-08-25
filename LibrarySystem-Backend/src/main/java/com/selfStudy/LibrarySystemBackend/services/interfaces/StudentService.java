@@ -1,8 +1,8 @@
 package com.selfStudy.LibrarySystemBackend.services.interfaces;
 
-import com.selfStudy.LibrarySystemBackend.models.Student;
+import com.selfStudy.LibrarySystemBackend.dtos.StudentDTO;
 
 public interface StudentService {
 
-	Student createNewStudent(Student student);
+	StudentDTO createNewStudent(StudentDTO student);
 }

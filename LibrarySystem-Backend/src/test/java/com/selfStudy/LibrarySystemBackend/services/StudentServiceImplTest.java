@@ -1,5 +1,6 @@
 package com.selfStudy.LibrarySystemBackend.services;
 
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Test;
@@ -8,6 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.selfStudy.LibrarySystemBackend.dtos.StudentDTO;
+import com.selfStudy.LibrarySystemBackend.mappers.StudentMapper;
 import com.selfStudy.LibrarySystemBackend.models.Student;
 import com.selfStudy.LibrarySystemBackend.repositories.StudentRepository;
 import com.selfStudy.LibrarySystemBackend.services.implementations.StudentServiceImpl;
@@ -21,17 +24,27 @@ public class StudentServiceImplTest {
 	@Mock
 	StudentRepository studentRepository;
 
+	@Mock
+	StudentMapper studentMapper;
+
 	@Test
 	public void createNewIdentification_WhenCallingCorrespondingApi_ReturnsTheCreatedIdentification() {
 		// Arrange
-		Student expected = TestUtils.createStudentObject();
+		StudentDTO inputStudent = TestUtils.createStudentDtoObject();
+		Student student = TestUtils.createStudentObject();
+		StudentDTO expectedDTO = TestUtils.createStudentDtoObject();
 
-		when(studentRepository.save(expected)).thenReturn(expected);
+		when(studentMapper.mapStudentDtoToStudent(inputStudent)).thenReturn(student);
+		when(studentRepository.save(student)).thenReturn(student);
+		when(studentMapper.mapStudentToStudentDto(student)).thenReturn(expectedDTO);
 
 		// Act
-		Student result = studentService.createNewStudent(expected);
+		StudentDTO result = studentService.createNewStudent(inputStudent);
 
 		// Assert
-		TestUtils.compareStudentObjects(expected, result);
+		TestUtils.compareStudentDtoObjects(expectedDTO, result);
+		verify(studentMapper).mapStudentDtoToStudent(inputStudent);
+		verify(studentRepository).save(student);
+		verify(studentMapper).mapStudentToStudentDto(student);
 	}
 }
