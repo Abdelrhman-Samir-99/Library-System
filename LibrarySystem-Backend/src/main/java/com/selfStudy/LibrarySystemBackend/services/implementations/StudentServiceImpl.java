@@ -1,5 +1,7 @@
 package com.selfStudy.LibrarySystemBackend.services.implementations;
 
+import java.util.UUID;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -39,5 +41,12 @@ public class StudentServiceImpl implements StudentService {
 
 
 		return studentMapper.mapStudentToStudentDto(existingStudent);
+	}
+
+	@Override
+	public StudentDTO getStudent(UUID studentId) {
+		Student student = studentRepository.findById(studentId)
+										   .orElseThrow(() -> new ResourceNotFoundException(STUDENT_NOT_FOUND_WITH_ID + studentId));
+		return studentMapper.mapStudentToStudentDto(student);
 	}
 }

@@ -4,6 +4,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -73,6 +74,26 @@ class StudentServiceImplTest {
 		verify(studentMapper).mapStudentDtoToStudent(inputStudent);
 		verify(studentRepository).save(inputEntity);
 		verify(studentRepository).findById(inputStudent.getId());
+		verify(studentMapper).mapStudentToStudentDto(expectedEntity);
+	}
+
+
+	@Test
+	void getStudent_FetchingTheStudentById_ReturnsTheSpecifiedStudentIfExist() {
+		// Arrange
+		UUID studentId = UUID.fromString(TestUtils.STUDENT_UUID);
+		StudentDTO expected = TestUtils.createStudentDtoObject();
+		Student expectedEntity = TestUtils.createStudentObject();
+
+		when(studentRepository.findById(studentId)).thenReturn(Optional.of(expectedEntity));
+		when(studentMapper.mapStudentToStudentDto(expectedEntity)).thenReturn(expected);
+
+		// Act
+		StudentDTO result = studentService.getStudent(studentId);
+
+		// Assert
+		TestUtils.compareStudentDtoObjects(expected, result);
+		verify(studentRepository).findById(studentId);
 		verify(studentMapper).mapStudentToStudentDto(expectedEntity);
 	}
 }

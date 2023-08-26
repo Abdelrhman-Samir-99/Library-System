@@ -3,6 +3,8 @@ package com.selfStudy.LibrarySystemBackend.controllers;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
+import java.util.UUID;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -46,11 +48,10 @@ class StudentControllerTest {
 		// Arrange
 		StudentDTO inputStudent = null;
 
-		when(studentService.createNewStudent(inputStudent)).thenThrow(IllegalArgumentException.class);
 
 		// Act - Assert
 		assertThrows(IllegalArgumentException.class, () -> {
-			studentService.createNewStudent(inputStudent);
+			studentController.createNewStudent(inputStudent);
 		});
 	}
 
@@ -76,11 +77,39 @@ class StudentControllerTest {
 		// Arrange
 		StudentDTO inputStudent = null;
 
-		when(studentService.updateStudent(inputStudent)).thenThrow(IllegalArgumentException.class);
 
 		// Act - Assert
 		assertThrows(IllegalArgumentException.class, () -> {
-			studentService.updateStudent(inputStudent);
+			studentController.updateStudent(inputStudent);
+		});
+	}
+
+	@Test
+	void getStudent_FetchingSpecificStudentById_ReturnsTheSpecifiedStudent() {
+		// Arrange
+		UUID studentId = UUID.fromString(TestUtils.STUDENT_UUID);
+		StudentDTO expected = TestUtils.createStudentDtoObject();
+
+		when(studentService.getStudent(studentId)).thenReturn(expected);
+
+		// Act
+		ResponseEntity<StudentDTO> result = studentController.getStudent(studentId);
+
+		// Assert
+		TestUtils.compareStudentDtoObjects(expected, result.getBody());
+
+		Assertions.assertEquals(HttpStatus.FOUND, result.getStatusCode());
+	}
+
+	@Test
+	void getStudent_inputStudentIsNull_ThrowsAnIllegalArgumentException() {
+		// Arrange
+		UUID studentId = null;
+
+
+		// Act - Assert
+		assertThrows(IllegalArgumentException.class, () -> {
+			studentController.getStudent(studentId);
 		});
 	}
 }
