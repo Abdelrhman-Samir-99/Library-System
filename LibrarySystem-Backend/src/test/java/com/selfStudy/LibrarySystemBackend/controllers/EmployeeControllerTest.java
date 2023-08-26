@@ -91,7 +91,7 @@ class EmployeeControllerTest {
 		UUID employeeId = UUID.fromString(TestUtils.EMPLOYEE_UUID);
 		EmployeeDTO expected = TestUtils.createEmployeeDtoObject();
 
-		when(employeeService.getEmployee(employeeId)).thenReturn(expected);
+		when(employeeService.getEmployeeById(employeeId)).thenReturn(expected);
 
 		// Act
 		ResponseEntity<EmployeeDTO> result = employeeController.getEmployee(employeeId);

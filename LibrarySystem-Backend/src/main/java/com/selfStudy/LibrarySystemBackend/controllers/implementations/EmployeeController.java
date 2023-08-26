@@ -42,7 +42,7 @@ public class EmployeeController implements EmployeeApi {
 			throw new IllegalArgumentException(EMPLOYEE_ID_IS_MISSING);
 		}
 
-		return new ResponseEntity<>(employeeService.getEmployee(employeeId), HttpStatus.FOUND);
+		return new ResponseEntity<>(employeeService.getEmployeeById(employeeId), HttpStatus.FOUND);
 	}
 
 	@Override

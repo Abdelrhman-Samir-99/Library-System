@@ -79,7 +79,7 @@ class IdentificationServiceImplTest {
 	}
 
 	@Test
-	void updateIdentification_StudentDoesNotExist_ThrowsResourceNotFoundException() {
+	void updateIdentification_StudentDtoDoesNotExist_ThrowsResourceNotFoundException() {
 		// Arrange
 		IdentificationDTO inputIdentification = TestUtils.createIdentificationDtoObject();
 
@@ -112,7 +112,7 @@ class IdentificationServiceImplTest {
 	}
 
 	@Test
-	void getIdentificationById_IdentificationDoesNotExist_ThrowsResourceNotFoundException() {
+	void getIdentificationById_IdentificationIdDoesNotExist_ThrowsResourceNotFoundException() {
 		// Arrange
 		UUID identificationId = UUID.randomUUID();
 
@@ -143,7 +143,7 @@ class IdentificationServiceImplTest {
 	}
 
 	@Test
-	void deleteIdentificationById_IdentificationDoesNotExist_ThrowsResourceNotFoundException() {
+	void deleteIdentificationById_IdentificationIDDoesNotExist_ThrowsResourceNotFoundException() {
 		// Arrange
 		UUID identificationId = UUID.randomUUID();
 
