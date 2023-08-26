@@ -1,5 +1,6 @@
 package com.selfStudy.LibrarySystemBackend.controllers;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -46,6 +47,17 @@ class IdentificationControllerTest {
 	}
 
 	@Test
+	void createIdentification_inputIdentificationDtoIsNull_ThrowsAnIllegalArgumentException() {
+		// Arrange
+		IdentificationDTO inputIdentification = null;
+
+		// Act - Assert
+		assertThrows(IllegalArgumentException.class, () -> {
+			identificationController.createNewIdentification(inputIdentification);
+		});
+	}
+
+	@Test
 	void updateIdentification_UpdatingSpecificIdentificationById_ReturnsTheUpdatedIdentityIfExists() {
 		// Arrange
 		IdentificationDTO expected = TestUtils.createIdentificationDtoObject();
@@ -58,6 +70,17 @@ class IdentificationControllerTest {
 		// Assert
 		TestUtils.compareIdentificationDtoObjects(expected, result.getBody());
 		Assertions.assertEquals(HttpStatus.OK, result.getStatusCode());
+	}
+
+	@Test
+	void updateIdentification_inputIdentificationDtoIsNull_ThrowsAnIllegalArgumentException() {
+		// Arrange
+		IdentificationDTO inputIdentification = null;
+
+		// Act - Assert
+		assertThrows(IllegalArgumentException.class, () -> {
+			identificationController.updateIdentification(inputIdentification);
+		});
 	}
 
 	@Test
@@ -76,7 +99,18 @@ class IdentificationControllerTest {
 	}
 
 	@Test
-	void deleteIdentification_CallingDeleteIdentificationEndPointById_DeleteTheRecordFromDatabaseIfExist() {
+	void getIdentificationById_inputIdentificationIdIsNull_ThrowsAnIllegalArgumentException() {
+		// Arrange
+		UUID inputIdentificationId = null;
+
+		// Act - Assert
+		assertThrows(IllegalArgumentException.class, () -> {
+			identificationController.getIdentificationById(inputIdentificationId);
+		});
+	}
+
+	@Test
+	void deleteIdentificationById_CallingDeleteIdentificationEndPointById_DeleteTheRecordFromDatabaseIfExist() {
 		// Arrange
 		UUID identificationId = UUID.randomUUID();
 
@@ -88,5 +122,16 @@ class IdentificationControllerTest {
 		// Assert
 		verify(identificationService).deleteIdentificationById(identificationId);
 		Assertions.assertEquals(HttpStatus.NO_CONTENT, result.getStatusCode());
+	}
+
+	@Test
+	void deleteIdentificationById_inputIdentificationIdIsNull_ThrowsAnIllegalArgumentException() {
+		// Arrange
+		UUID inputIdentificationId = null;
+
+		// Act - Assert
+		assertThrows(IllegalArgumentException.class, () -> {
+			identificationController.deleteIdentificationById(inputIdentificationId);
+		});
 	}
 }
