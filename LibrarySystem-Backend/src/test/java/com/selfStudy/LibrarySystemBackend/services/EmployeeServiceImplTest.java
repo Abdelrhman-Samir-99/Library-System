@@ -24,7 +24,7 @@ import com.selfStudy.LibrarySystemBackend.services.implementations.EmployeeServi
 import com.selfStudy.LibrarySystemBackend.utils.TestUtils;
 
 @ExtendWith(MockitoExtension.class)
-public class EmployeeServiceImplTest {
+class EmployeeServiceImplTest {
 
 	@InjectMocks
 	EmployeeServiceImpl employeeService;
@@ -34,6 +34,32 @@ public class EmployeeServiceImplTest {
 
 	@Mock
 	EmployeeMapper employeeMapper;
+
+
+	@Test
+	void createNewEmployee_CreatingNewEmployee_ReturnsTheCreatedEmployee() {
+		// Arrange
+		EmployeeDTO inputEmployee = TestUtils.createEmployeeDtoObject();
+		Employee inputEmployeeEntity = TestUtils.createEmployeeObject();
+		EmployeeDTO expected = TestUtils.createEmployeeDtoObject();
+		Employee expectedEntity = TestUtils.createEmployeeObject();
+
+
+		when(employeeMapper.mapEmployeeDtoToEmployee(inputEmployee)).thenReturn(inputEmployeeEntity);
+		when(employeeRepository.save(inputEmployeeEntity)).thenReturn(expectedEntity);
+		when(employeeMapper.mapEmployeeToEmployeeDto(expectedEntity)).thenReturn(expected);
+
+
+
+		// Act
+		EmployeeDTO result = employeeService.createNewEmployee(inputEmployee);
+
+		// Assert
+		Assertions.assertEquals(expected, result);
+		verify(employeeMapper).mapEmployeeDtoToEmployee(inputEmployee);
+		verify(employeeMapper).mapEmployeeToEmployeeDto(expectedEntity);
+		verify(employeeRepository).save(inputEmployeeEntity);
+	}
 
 
 	@Test
@@ -52,10 +78,14 @@ public class EmployeeServiceImplTest {
 
 
 		// Act
-		EmployeeDTO result = employeeService.updateEmployee(expected);
+		EmployeeDTO result = employeeService.updateEmployee(inputEmployee);
 
 		// Assert
 		Assertions.assertEquals(expected, result);
+		verify(employeeMapper).mapEmployeeDtoToEmployee(inputEmployee);
+		verify(employeeRepository).findById(inputEmployee.getId());
+		verify(employeeMapper).mapEmployeeToEmployeeDto(expectedEntity);
+		verify(employeeRepository).save(expectedEntity);
 	}
 
 	@Test
