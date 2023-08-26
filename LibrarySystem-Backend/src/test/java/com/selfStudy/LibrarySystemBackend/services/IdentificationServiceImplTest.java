@@ -47,10 +47,13 @@ class IdentificationServiceImplTest {
 
 		// Assert
 		TestUtils.compareIdentificationWithIdentificationDtoObjects(expected, result);
+		verify(identificationRepository).save(expected);
+		verify(identificationMapper).mapDtoToIdentification(inputIdentification);
+		verify(identificationMapper).mapIdentificationToDto(expected);
 	}
 
 	@Test
-	public void updateIdentification_CallingUpdateIdentificationEndPointById_ReturnsTheUpdatedIdentification() {
+	void updateIdentification_CallingUpdateIdentificationEndPointById_ReturnsTheUpdatedIdentification() {
 		// Arrange
 		IdentificationDTO inputIdentificationDto = TestUtils.createIdentificationDtoObject();
 		Identification inputIdentificationEntity = TestUtils.createIdentificationObject();
@@ -74,7 +77,7 @@ class IdentificationServiceImplTest {
 	}
 
 	@Test
-	public void getIdentification_CallingGetIdentificationEndPointById_ReturnsTheIdentityIfExists() {
+	void getIdentification_CallingGetIdentificationEndPointById_ReturnsTheIdentityIfExists() {
 		// Arrange
 		UUID identificationId = UUID.fromString(TestUtils.IDENTIFICATION_UUID);
 		Identification expectedEntity = TestUtils.createIdentificationObject();
@@ -93,7 +96,7 @@ class IdentificationServiceImplTest {
 	}
 
 	@Test
-	public void deleteIdentification_CallingDeleteIdentificationEndPointById_ReturnsTheIdentityIfExists() {
+	void deleteIdentification_CallingDeleteIdentificationEndPointById_ReturnsTheIdentityIfExists() {
 		// Arrange
 		UUID identificationId = UUID.fromString(TestUtils.IDENTIFICATION_UUID);
 		Identification expectedEntity = TestUtils.createIdentificationObject();
