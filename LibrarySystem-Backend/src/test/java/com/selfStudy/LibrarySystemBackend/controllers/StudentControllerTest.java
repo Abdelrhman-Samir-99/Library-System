@@ -1,6 +1,8 @@
 package com.selfStudy.LibrarySystemBackend.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.UUID;
@@ -110,6 +112,33 @@ class StudentControllerTest {
 		// Act - Assert
 		assertThrows(IllegalArgumentException.class, () -> {
 			studentController.getStudent(studentId);
+		});
+	}
+
+	@Test
+	void deleteStudent_deleteSpecificStudentById_DeleteTheRecordFromDatabase() {
+		// Arrange
+		UUID studentId = UUID.fromString(TestUtils.STUDENT_UUID);
+
+		 doNothing().when(studentService).deleteStudent(studentId);
+
+		// Act
+		ResponseEntity<Void> result = studentController.deleteStudent(studentId);
+
+		// Assert
+		verify(studentService).deleteStudent(studentId);
+		Assertions.assertEquals(HttpStatus.NO_CONTENT, result.getStatusCode());
+	}
+
+	@Test
+	void getStudent_inputStudentIsNull_ThrowsAnIllegalArgumentException_DeleteTheRecordFromDatabase() {
+		// Arrange
+		UUID studentId = null;
+
+
+		// Act - Assert
+		assertThrows(IllegalArgumentException.class, () -> {
+			studentController.deleteStudent(studentId);
 		});
 	}
 }

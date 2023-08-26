@@ -49,4 +49,12 @@ public class StudentServiceImpl implements StudentService {
 										   .orElseThrow(() -> new ResourceNotFoundException(STUDENT_NOT_FOUND_WITH_ID + studentId));
 		return studentMapper.mapStudentToStudentDto(student);
 	}
+
+	@Override
+	public void deleteStudent(UUID studentId) {
+		Student student = studentRepository.findById(studentId)
+										   .orElseThrow(() -> new ResourceNotFoundException(STUDENT_NOT_FOUND_WITH_ID + studentId));
+
+		studentRepository.delete(student);
+	}
 }

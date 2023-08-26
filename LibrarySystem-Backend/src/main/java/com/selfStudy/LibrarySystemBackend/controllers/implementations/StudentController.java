@@ -44,4 +44,13 @@ public class StudentController implements StudentApi {
 
 		return new ResponseEntity<>(studentService.getStudent(studentId), HttpStatus.FOUND);
 	}
+
+	@Override
+	public ResponseEntity<Void> deleteStudent(UUID studentId) {
+		if(studentId == null) {
+			throw new IllegalArgumentException(STUDENT_ID_IS_NULL);
+		}
+		studentService.deleteStudent(studentId);
+		return ResponseEntity.noContent().build();
+	}
 }

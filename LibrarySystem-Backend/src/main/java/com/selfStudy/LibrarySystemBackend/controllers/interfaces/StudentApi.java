@@ -3,6 +3,9 @@ package com.selfStudy.LibrarySystemBackend.controllers.interfaces;
 import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,5 +25,9 @@ public interface StudentApi {
 	@PutMapping
 	ResponseEntity<StudentDTO> updateStudent(@RequestBody StudentDTO inputStudent);
 
-	ResponseEntity<StudentDTO> getStudent(UUID studentId);
+	@GetMapping("/{studentId}")
+	ResponseEntity<StudentDTO> getStudent(@PathVariable UUID studentId);
+
+	@DeleteMapping("/{studentId}")
+	ResponseEntity<Void> deleteStudent(@PathVariable UUID studentId);
 }
