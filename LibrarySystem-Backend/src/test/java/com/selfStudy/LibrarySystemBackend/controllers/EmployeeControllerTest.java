@@ -18,7 +18,7 @@ import com.selfStudy.LibrarySystemBackend.services.interfaces.EmployeeService;
 import com.selfStudy.LibrarySystemBackend.utils.TestUtils;
 
 @ExtendWith(MockitoExtension.class)
-public class EmployeeControllerTest {
+class EmployeeControllerTest {
 
 	@InjectMocks
 	EmployeeController employeeController;
@@ -44,7 +44,7 @@ public class EmployeeControllerTest {
 	}
 
 	@Test
-	void createNewEmployee_inputIdentificationDtoIsNull_ThrowsAnIllegalArgumentException() {
+	void createNewEmployee_inputEmployeeDtoIsNull_ThrowsAnIllegalArgumentException() {
 		// Arrange
 		EmployeeDTO inputEmployee = null;
 
@@ -53,4 +53,33 @@ public class EmployeeControllerTest {
 			employeeController.createNewEmployee(inputEmployee);
 		});
 	}
+
+	@Test
+	void updateEmployee_UpdateExistingEmployee_ReturnsTheUpdatedEmployeeIfExist() {
+		// Arrange
+		EmployeeDTO inputEmployee = TestUtils.createEmployeeDtoObject();
+		EmployeeDTO expected = TestUtils.createEmployeeDtoObject();
+
+		when(employeeService.updateEmployee(inputEmployee)).thenReturn(expected);
+
+		// Act
+		ResponseEntity<EmployeeDTO> result = employeeController.updateEmployee(inputEmployee);
+
+		// Assert
+		Assertions.assertEquals(expected, result.getBody());
+
+		Assertions.assertEquals(HttpStatus.OK, result.getStatusCode());
+	}
+
+	@Test
+	void updateEmployee_inputEmployeeDtoIsNull_ThrowsAnIllegalArgumentException() {
+		// Arrange
+		EmployeeDTO inputEmployee = null;
+
+		// Act - Assert
+		assertThrows(IllegalArgumentException.class, () -> {
+			employeeController.updateEmployee(inputEmployee);
+		});
+	}
+
 }

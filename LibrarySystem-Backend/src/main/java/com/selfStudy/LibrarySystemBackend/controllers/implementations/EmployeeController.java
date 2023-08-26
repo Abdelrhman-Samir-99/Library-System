@@ -24,4 +24,13 @@ public class EmployeeController implements EmployeeApi {
 
 		return new ResponseEntity<>(employeeService.createNewEmployee(inputEmployee), HttpStatus.CREATED);
 	}
+
+	@Override
+	public ResponseEntity<EmployeeDTO> updateEmployee(EmployeeDTO inputEmployee) {
+		if(inputEmployee == null) {
+			throw new IllegalArgumentException(IDENTIFICATION_DTO_OBJECT_IS_MISSING);
+		}
+
+		return new ResponseEntity<>(employeeService.updateEmployee(inputEmployee), HttpStatus.OK);
+	}
 }
