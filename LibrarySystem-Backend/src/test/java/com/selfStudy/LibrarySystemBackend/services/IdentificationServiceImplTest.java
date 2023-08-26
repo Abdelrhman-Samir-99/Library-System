@@ -49,20 +49,29 @@ class IdentificationServiceImplTest {
 		TestUtils.compareIdentificationWithIdentificationDtoObjects(expected, result);
 	}
 
-	// @Test
-	// public void updateIdentification_CallingUpdateIdentificationEndPointById_ReturnsTheUpdatedIdentification() {
-	// 	// Arrange
-	// 	IdentificationDTO expected = TestUtils.createIdentificationDtoObject();
-	//
-	// 	when(identificationRepository.save(expected)).thenReturn(expected);
-	// 	when(identificationRepository.findById(expected.getId())).thenReturn(Optional.of(expected));
-	//
-	// 	// Act
-	// 	IdentificationDTO result = identificationService.updateIdentification(expected);
-	//
-	// 	// Assert
-	// 	TestUtils.compareIdentificationObjects(expected, result);
-	// }
+	@Test
+	public void updateIdentification_CallingUpdateIdentificationEndPointById_ReturnsTheUpdatedIdentification() {
+		// Arrange
+		IdentificationDTO inputIdentificationDto = TestUtils.createIdentificationDtoObject();
+		Identification inputIdentificationEntity = TestUtils.createIdentificationObject();
+		Identification expectedEntity = TestUtils.createIdentificationObject();
+		IdentificationDTO expected = TestUtils.createIdentificationDtoObject();
+
+		when(identificationMapper.mapDtoToIdentification(inputIdentificationDto)).thenReturn(inputIdentificationEntity);
+		when(identificationRepository.findById(inputIdentificationDto.getId())).thenReturn(Optional.of(expectedEntity));
+		when(identificationRepository.save(expectedEntity)).thenReturn(expectedEntity);
+		when(identificationMapper.mapIdentificationToDto(expectedEntity)).thenReturn(expected);
+
+		// Act
+		IdentificationDTO result = identificationService.updateIdentification(inputIdentificationDto);
+
+		// Assert
+		TestUtils.compareIdentificationDtoObjects(expected, result);
+		verify(identificationRepository).findById(inputIdentificationDto.getId());
+		verify(identificationRepository).save(expectedEntity);
+		verify(identificationMapper).mapDtoToIdentification(inputIdentificationDto);
+		verify(identificationMapper).mapIdentificationToDto(expectedEntity);
+	}
 
 	@Test
 	public void getIdentification_CallingGetIdentificationEndPointById_ReturnsTheIdentityIfExists() {
