@@ -34,8 +34,7 @@ public class IdentificationServiceImpl implements IdentificationService {
 		Optional<Identification> optionalIdentification = identificationRepository.findById(identificationDto.getId());
 
 		Identification existedIdentification = optionalIdentification
-													.orElseThrow(() -> new ResourceNotFoundException(
-															RECORD_NOT_FOUND_WITH_ID + identificationDto.getId()));
+													.orElseThrow(() -> new ResourceNotFoundException(RECORD_NOT_FOUND_WITH_ID + identificationDto.getId()));
 		Identification identification = identificationMapper.mapDtoToIdentification(identificationDto);
 
 		BeanUtils.copyProperties(identification, existedIdentification);

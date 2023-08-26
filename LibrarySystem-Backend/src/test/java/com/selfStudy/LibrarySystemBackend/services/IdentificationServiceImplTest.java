@@ -1,5 +1,6 @@
 package com.selfStudy.LibrarySystemBackend.services;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -14,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.selfStudy.LibrarySystemBackend.dtos.IdentificationDTO;
+import com.selfStudy.LibrarySystemBackend.exceptions.ResourceNotFoundException;
 import com.selfStudy.LibrarySystemBackend.mappers.IdentificationMapper;
 import com.selfStudy.LibrarySystemBackend.models.Identification;
 import com.selfStudy.LibrarySystemBackend.repositories.IdentificationRepository;
@@ -77,7 +79,21 @@ class IdentificationServiceImplTest {
 	}
 
 	@Test
-	void getIdentification_CallingGetIdentificationEndPointById_ReturnsTheIdentityIfExists() {
+	void updateIdentification_StudentDoesNotExist_ThrowsResourceNotFoundException() {
+		// Arrange
+		IdentificationDTO inputIdentification = TestUtils.createIdentificationDtoObject();
+
+		when(identificationRepository.findById(inputIdentification.getId())).thenThrow(ResourceNotFoundException.class);
+
+
+		// Act - Assert
+		assertThrows(ResourceNotFoundException.class, () -> {
+			identificationService.updateIdentification(inputIdentification);
+		});
+	}
+
+	@Test
+	void getIdentificationById_CallingGetIdentificationEndPointById_ReturnsTheIdentityIfExists() {
 		// Arrange
 		UUID identificationId = UUID.fromString(TestUtils.IDENTIFICATION_UUID);
 		Identification expectedEntity = TestUtils.createIdentificationObject();
@@ -96,7 +112,21 @@ class IdentificationServiceImplTest {
 	}
 
 	@Test
-	void deleteIdentification_CallingDeleteIdentificationEndPointById_ReturnsTheIdentityIfExists() {
+	void getIdentificationById_IdentificationDoesNotExist_ThrowsResourceNotFoundException() {
+		// Arrange
+		UUID identificationId = UUID.randomUUID();
+
+		when(identificationRepository.findById(identificationId)).thenThrow(ResourceNotFoundException.class);
+
+
+		// Act - Assert
+		assertThrows(ResourceNotFoundException.class, () -> {
+			identificationService.getIdentificationById(identificationId);
+		});
+	}
+
+	@Test
+	void deleteIdentificationById_CallingDeleteIdentificationEndPointById_ReturnsTheIdentityIfExists() {
 		// Arrange
 		UUID identificationId = UUID.fromString(TestUtils.IDENTIFICATION_UUID);
 		Identification expectedEntity = TestUtils.createIdentificationObject();
@@ -110,5 +140,19 @@ class IdentificationServiceImplTest {
 		// Assert
 		verify(identificationRepository).delete(expectedEntity);
 		verify(identificationRepository).findById(identificationId);
+	}
+
+	@Test
+	void deleteIdentificationById_IdentificationDoesNotExist_ThrowsResourceNotFoundException() {
+		// Arrange
+		UUID identificationId = UUID.randomUUID();
+
+		when(identificationRepository.findById(identificationId)).thenThrow(ResourceNotFoundException.class);
+
+
+		// Act - Assert
+		assertThrows(ResourceNotFoundException.class, () -> {
+			identificationService.deleteIdentificationById(identificationId);
+		});
 	}
 }

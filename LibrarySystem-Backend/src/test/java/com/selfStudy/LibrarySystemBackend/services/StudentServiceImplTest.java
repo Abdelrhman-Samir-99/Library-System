@@ -1,5 +1,6 @@
 package com.selfStudy.LibrarySystemBackend.services;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -14,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.selfStudy.LibrarySystemBackend.dtos.StudentDTO;
+import com.selfStudy.LibrarySystemBackend.exceptions.ResourceNotFoundException;
 import com.selfStudy.LibrarySystemBackend.mappers.StudentMapper;
 import com.selfStudy.LibrarySystemBackend.models.Student;
 import com.selfStudy.LibrarySystemBackend.repositories.StudentRepository;
@@ -79,6 +81,20 @@ class StudentServiceImplTest {
 	}
 
 	@Test
+	void updateStudent_StudentDoesNotExist_ThrowsResourceNotFoundException() {
+		// Arrange
+		StudentDTO inputStudent = TestUtils.createStudentDtoObject();
+
+		when(studentRepository.findById(inputStudent.getId())).thenThrow(ResourceNotFoundException.class);
+
+
+		// Act - Assert
+		assertThrows(ResourceNotFoundException.class, () -> {
+			studentService.updateStudent(inputStudent);
+		});
+	}
+
+	@Test
 	void getStudent_FetchingTheStudentById_ReturnsTheSpecifiedStudentIfExist() {
 		// Arrange
 		UUID studentId = UUID.fromString(TestUtils.STUDENT_UUID);
@@ -98,6 +114,20 @@ class StudentServiceImplTest {
 	}
 
 	@Test
+	void getStudent_StudentDoesNotExist_ThrowsResourceNotFoundException() {
+		// Arrange
+		UUID studentId = UUID.randomUUID();
+
+		when(studentRepository.findById(studentId)).thenThrow(ResourceNotFoundException.class);
+
+
+		// Act - Assert
+		assertThrows(ResourceNotFoundException.class, () -> {
+			studentService.getStudent(studentId);
+		});
+	}
+
+	@Test
 	void deleteStudent_FetchingTheStudentById_ReturnsTheSpecifiedStudentIfExist() {
 		// Arrange
 		UUID studentId = UUID.fromString(TestUtils.STUDENT_UUID);
@@ -112,5 +142,19 @@ class StudentServiceImplTest {
 		// Assert
 		verify(studentRepository).findById(studentId);
 		verify(studentRepository).delete(expectedEntity);
+	}
+
+	@Test
+	void deleteStudent_StudentDoesNotExist_ThrowsResourceNotFoundException() {
+		// Arrange
+		UUID studentId = UUID.randomUUID();
+
+		when(studentRepository.findById(studentId)).thenThrow(ResourceNotFoundException.class);
+
+
+		// Act - Assert
+		assertThrows(ResourceNotFoundException.class, () -> {
+			studentService.deleteStudent(studentId);
+		});
 	}
 }
