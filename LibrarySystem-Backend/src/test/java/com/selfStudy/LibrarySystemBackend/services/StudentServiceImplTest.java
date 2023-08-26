@@ -3,6 +3,8 @@ package com.selfStudy.LibrarySystemBackend.services;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -18,7 +20,7 @@ import com.selfStudy.LibrarySystemBackend.utils.TestUtils;
 
 @ExtendWith(MockitoExtension.class)
 class StudentServiceImplTest {
-	@InjectMocks // TODO: figure out whether it is possible to use the abstraction instead of the concrete class, also whether I should or not.
+	@InjectMocks
 	StudentServiceImpl studentService;
 
 	@Mock
@@ -28,7 +30,7 @@ class StudentServiceImplTest {
 	StudentMapper studentMapper;
 
 	@Test
-	 void createNewIdentification_WhenCallingCorrespondingApi_ReturnsTheCreatedIdentification() {
+	 void createNewStudent_WhenCallingCorrespondingApi_ReturnsTheCreatedStudent() {
 		// Arrange
 		StudentDTO inputStudent = TestUtils.createStudentDtoObject();
 		Student student = TestUtils.createStudentObject();
@@ -46,5 +48,31 @@ class StudentServiceImplTest {
 		verify(studentMapper).mapStudentDtoToStudent(inputStudent);
 		verify(studentRepository).save(student);
 		verify(studentMapper).mapStudentToStudentDto(student);
+	}
+
+	@Test
+	void updateStudent_UpdatingExistingStudent_ReturnsTheUpdatedStudent() {
+		// Arrange
+		StudentDTO inputStudent = TestUtils.createStudentDtoObject();
+		StudentDTO expected = TestUtils.createStudentDtoObject();
+
+		Student inputEntity = TestUtils.createStudentObject();
+		Student expectedEntity = TestUtils.createStudentObject();
+
+		when(studentRepository.save(inputEntity)).thenReturn(expectedEntity);
+		when(studentRepository.findById(inputStudent.getId())).thenReturn(Optional.of(inputEntity));
+		when(studentMapper.mapStudentDtoToStudent(inputStudent)).thenReturn(expectedEntity);
+		when(studentMapper.mapStudentToStudentDto(expectedEntity)).thenReturn(expected);
+
+
+		// Act
+		StudentDTO result = studentService.updateStudent(inputStudent);
+
+		// Assert
+		TestUtils.compareStudentDtoObjects(expected, result);
+		verify(studentMapper).mapStudentDtoToStudent(inputStudent);
+		verify(studentRepository).save(inputEntity);
+		verify(studentRepository).findById(inputStudent.getId());
+		verify(studentMapper).mapStudentToStudentDto(expectedEntity);
 	}
 }
