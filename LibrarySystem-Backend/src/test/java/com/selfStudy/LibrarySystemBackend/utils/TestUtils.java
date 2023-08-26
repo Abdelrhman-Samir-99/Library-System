@@ -15,6 +15,7 @@ public class TestUtils {
 
 	public static final String IDENTIFICATION_UUID = "77365c0c-3867-11ee-be56-0242ac120002";
 	public static final String STUDENT_UUID = "9fbe6561-586c-423a-9706-cf1989762d5a";
+	public static final String EMPLOYEE_UUID = "5c525e8c-8631-40b5-b194-11a5a93b9310";
 
 	public static void compareIdentificationWithIdentificationDtoObjects(Identification expected, IdentificationDTO result) {
 		assertEquals(expected.getId(), result.getId());

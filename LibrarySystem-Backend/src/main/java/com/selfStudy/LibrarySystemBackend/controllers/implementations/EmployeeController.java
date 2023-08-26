@@ -1,5 +1,7 @@
 package com.selfStudy.LibrarySystemBackend.controllers.implementations;
 
+import java.util.UUID;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +21,7 @@ public class EmployeeController implements EmployeeApi {
 	@Override
 	public ResponseEntity<EmployeeDTO> createNewEmployee(EmployeeDTO inputEmployee) {
 		if(inputEmployee == null) {
-			throw new IllegalArgumentException(IDENTIFICATION_DTO_OBJECT_IS_MISSING);
+			throw new IllegalArgumentException(EMPLOYEE_DTO_OBJECT_IS_MISSING);
 		}
 
 		return new ResponseEntity<>(employeeService.createNewEmployee(inputEmployee), HttpStatus.CREATED);
@@ -28,9 +30,18 @@ public class EmployeeController implements EmployeeApi {
 	@Override
 	public ResponseEntity<EmployeeDTO> updateEmployee(EmployeeDTO inputEmployee) {
 		if(inputEmployee == null) {
-			throw new IllegalArgumentException(IDENTIFICATION_DTO_OBJECT_IS_MISSING);
+			throw new IllegalArgumentException(EMPLOYEE_DTO_OBJECT_IS_MISSING);
 		}
 
 		return new ResponseEntity<>(employeeService.updateEmployee(inputEmployee), HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<EmployeeDTO> getEmployee(UUID employeeId) {
+		if(employeeId == null) {
+			throw new IllegalArgumentException(EMPLOYEE_ID_IS_MISSING);
+		}
+
+		return new ResponseEntity<>(employeeService.getEmployee(employeeId), HttpStatus.FOUND);
 	}
 }

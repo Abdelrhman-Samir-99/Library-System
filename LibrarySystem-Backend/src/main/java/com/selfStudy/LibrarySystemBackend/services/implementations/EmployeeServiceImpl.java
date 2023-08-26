@@ -1,5 +1,7 @@
 package com.selfStudy.LibrarySystemBackend.services.implementations;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 
 import com.selfStudy.LibrarySystemBackend.dtos.EmployeeDTO;
@@ -21,6 +23,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public EmployeeDTO updateEmployee(EmployeeDTO inputEmployee) {
+		return null;
+	}
+
+	@Override
+	public EmployeeDTO getEmployee(UUID employeeId) {
 		return null;
 	}
 }
