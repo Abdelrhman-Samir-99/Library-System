@@ -53,7 +53,7 @@ public class StudentServiceImpl implements StudentService {
 		return studentMapper.mapStudentToStudentDto(existingStudent);
 	}
 
-
+	@Transactional
 	@Override
 	public void deleteStudent(UUID studentId) {
 		Student student = studentRepository.findById(studentId)

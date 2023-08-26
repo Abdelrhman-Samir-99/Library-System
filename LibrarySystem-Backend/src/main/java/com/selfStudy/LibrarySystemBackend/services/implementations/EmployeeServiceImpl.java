@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.selfStudy.LibrarySystemBackend.dtos.EmployeeDTO;
 import com.selfStudy.LibrarySystemBackend.exceptions.ResourceNotFoundException;
@@ -21,6 +22,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private final EmployeeRepository employeeRepository;
 	private final EmployeeMapper employeeMapper;
 
+	@Transactional
 	@Override
 	public EmployeeDTO createNewEmployee(EmployeeDTO inputEmployee) {
 		Employee employee = employeeMapper.mapEmployeeDtoToEmployee(inputEmployee);
@@ -28,6 +30,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeeMapper.mapEmployeeToEmployeeDto(employeeRepository.save(employee));
 	}
 
+	@Override
+	public EmployeeDTO getEmployeeById(UUID employeeId) {
+		Employee employee = employeeRepository.findById(employeeId)
+											  .orElseThrow(() -> new ResourceNotFoundException(EMPLOYEE_RECORD_NOT_FOUND_WITH_ID + employeeId));
+		return employeeMapper.mapEmployeeToEmployeeDto(employee);
+	}
+
+	@Transactional
 	@Override
 	public EmployeeDTO updateEmployee(EmployeeDTO inputEmployee) {
 		Employee existingEmployee = employeeRepository.findById(inputEmployee.getId())
@@ -43,13 +53,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeeMapper.mapEmployeeToEmployeeDto(existingEmployee);
 	}
 
-	@Override
-	public EmployeeDTO getEmployeeById(UUID employeeId) {
-		Employee employee = employeeRepository.findById(employeeId)
-											  .orElseThrow(() -> new ResourceNotFoundException(EMPLOYEE_RECORD_NOT_FOUND_WITH_ID + employeeId));
-		return employeeMapper.mapEmployeeToEmployeeDto(employee);
-	}
-
+	@Transactional
 	@Override
 	public void deleteEmployeeById(UUID employeeId) {
 		Employee employee = employeeRepository.findById(employeeId)
