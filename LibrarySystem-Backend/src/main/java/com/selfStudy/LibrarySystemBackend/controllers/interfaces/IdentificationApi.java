@@ -15,6 +15,10 @@ import com.selfStudy.LibrarySystemBackend.dtos.IdentificationDTO;
 
 @RequestMapping("/api/v1/identification")
 public interface IdentificationApi {
+
+	String IDENTIFICATION_DTO_OBJECT_IS_MISSING = "Identification DTO Object is missing!";
+	String IDENTIFICATION_ID_IS_NULL = "Identification ID is missing!";
+
 	@PostMapping
 	ResponseEntity<IdentificationDTO> createNewIdentification(@RequestBody IdentificationDTO identification);
 

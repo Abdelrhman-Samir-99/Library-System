@@ -19,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class IdentificationServiceImpl implements IdentificationService {
 
-	public static final String RECORD_NOT_FOUND_WITH_ID = "Record not found with id: ";
 	private final IdentificationRepository identificationRepository;
 	private final IdentificationMapper identificationMapper;
 

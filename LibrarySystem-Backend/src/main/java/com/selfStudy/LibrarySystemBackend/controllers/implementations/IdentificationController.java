@@ -22,7 +22,7 @@ public class IdentificationController implements IdentificationApi {
 	@Override
 	public ResponseEntity<IdentificationDTO> createNewIdentification(IdentificationDTO identification) {
 		if(identification == null) {
-			throw new IllegalArgumentException("Identification Object is null");
+			throw new IllegalArgumentException(IDENTIFICATION_DTO_OBJECT_IS_MISSING);
 		}
 
 		return new ResponseEntity<>(identificationService.createNewIdentification(identification), HttpStatus.CREATED);
@@ -31,7 +31,7 @@ public class IdentificationController implements IdentificationApi {
 	@Override
 	public ResponseEntity<IdentificationDTO> updateIdentification(IdentificationDTO identification) {
 		if(identification == null) {
-			throw new IllegalArgumentException("Identification Object is null");
+			throw new IllegalArgumentException(IDENTIFICATION_DTO_OBJECT_IS_MISSING);
 		}
 
 		return new ResponseEntity<>(identificationService.updateIdentification(identification), HttpStatus.OK);
@@ -40,7 +40,7 @@ public class IdentificationController implements IdentificationApi {
 	@Override
 	public ResponseEntity<IdentificationDTO> getIdentificationById(UUID identificationId) {
 		if(identificationId == null) {
-			throw new IllegalArgumentException("Identification ID is null");
+			throw new IllegalArgumentException(IDENTIFICATION_ID_IS_NULL);
 		}
 
 		return new ResponseEntity<>(identificationService.getIdentificationById(identificationId), HttpStatus.FOUND);
@@ -49,7 +49,7 @@ public class IdentificationController implements IdentificationApi {
 	@Override
 	public ResponseEntity<Void> deleteIdentificationById(UUID identificationId) {
 		if(identificationId == null) {
-			throw new IllegalArgumentException("Identification ID is null");
+			throw new IllegalArgumentException(IDENTIFICATION_ID_IS_NULL);
 		}
 
 		identificationService.deleteIdentificationById(identificationId);

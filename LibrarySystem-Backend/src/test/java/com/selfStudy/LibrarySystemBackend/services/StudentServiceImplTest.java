@@ -1,5 +1,6 @@
 package com.selfStudy.LibrarySystemBackend.services;
 
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -21,6 +22,7 @@ import com.selfStudy.LibrarySystemBackend.utils.TestUtils;
 
 @ExtendWith(MockitoExtension.class)
 class StudentServiceImplTest {
+
 	@InjectMocks
 	StudentServiceImpl studentService;
 
@@ -31,7 +33,7 @@ class StudentServiceImplTest {
 	StudentMapper studentMapper;
 
 	@Test
-	 void createNewStudent_WhenCallingCorrespondingApi_ReturnsTheCreatedStudent() {
+	void createNewStudent_CreatingNewStudent_ReturnsTheCreatedStudent() {
 		// Arrange
 		StudentDTO inputStudent = TestUtils.createStudentDtoObject();
 		Student student = TestUtils.createStudentObject();
@@ -65,7 +67,6 @@ class StudentServiceImplTest {
 		when(studentMapper.mapStudentDtoToStudent(inputStudent)).thenReturn(expectedEntity);
 		when(studentMapper.mapStudentToStudentDto(expectedEntity)).thenReturn(expected);
 
-
 		// Act
 		StudentDTO result = studentService.updateStudent(inputStudent);
 
@@ -76,7 +77,6 @@ class StudentServiceImplTest {
 		verify(studentRepository).findById(inputStudent.getId());
 		verify(studentMapper).mapStudentToStudentDto(expectedEntity);
 	}
-
 
 	@Test
 	void getStudent_FetchingTheStudentById_ReturnsTheSpecifiedStudentIfExist() {
@@ -95,5 +95,22 @@ class StudentServiceImplTest {
 		TestUtils.compareStudentDtoObjects(expected, result);
 		verify(studentRepository).findById(studentId);
 		verify(studentMapper).mapStudentToStudentDto(expectedEntity);
+	}
+
+	@Test
+	void deleteStudent_FetchingTheStudentById_ReturnsTheSpecifiedStudentIfExist() {
+		// Arrange
+		UUID studentId = UUID.fromString(TestUtils.STUDENT_UUID);
+		Student expectedEntity = TestUtils.createStudentObject();
+
+		when(studentRepository.findById(studentId)).thenReturn(Optional.of(expectedEntity));
+		doNothing().when(studentRepository).delete(expectedEntity);
+
+		// Act
+		studentService.deleteStudent(studentId);
+
+		// Assert
+		verify(studentRepository).findById(studentId);
+		verify(studentRepository).delete(expectedEntity);
 	}
 }

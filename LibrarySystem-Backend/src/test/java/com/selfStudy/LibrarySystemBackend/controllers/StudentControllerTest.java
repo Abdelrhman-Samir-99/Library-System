@@ -23,6 +23,7 @@ import com.selfStudy.LibrarySystemBackend.utils.TestUtils;
 
 @ExtendWith(MockitoExtension.class)
 class StudentControllerTest {
+
 	@InjectMocks
 	StudentController studentController;
 
@@ -30,7 +31,7 @@ class StudentControllerTest {
 	StudentService studentService;
 
 	@Test
-	 void createNewStudent_CorrespondingApi_ReturnsTheCreatedStudent() {
+	void createNewStudent_CreatingNewStudent_ReturnsTheCreatedStudent() {
 		// Arrange
 		StudentDTO expected = TestUtils.createStudentDtoObject();
 
@@ -46,10 +47,9 @@ class StudentControllerTest {
 	}
 
 	@Test
-	void createNewStudent_inputStudentIsNull_ThrowsAnIllegalArgumentException() {
+	void createNewStudent_inputStudentDtoIsNull_ThrowsAnIllegalArgumentException() {
 		// Arrange
 		StudentDTO inputStudent = null;
-
 
 		// Act - Assert
 		assertThrows(IllegalArgumentException.class, () -> {
@@ -58,7 +58,7 @@ class StudentControllerTest {
 	}
 
 	@Test
-	void updateStudent_CorrespondingApi_ReturnsTheUpdatedStudent() {
+	void updateStudent_UpdatingExistingStudent_ReturnsTheUpdatedStudent() {
 		// Arrange
 		StudentDTO inputStudent = TestUtils.createStudentDtoObject();
 		StudentDTO expected = TestUtils.createStudentDtoObject();
@@ -75,10 +75,9 @@ class StudentControllerTest {
 	}
 
 	@Test
-	void updateStudent_inputStudentIsNull_ThrowsAnIllegalArgumentException() {
+	void updateStudent_inputStudentDtoIsNull_ThrowsAnIllegalArgumentException() {
 		// Arrange
 		StudentDTO inputStudent = null;
-
 
 		// Act - Assert
 		assertThrows(IllegalArgumentException.class, () -> {
@@ -104,10 +103,9 @@ class StudentControllerTest {
 	}
 
 	@Test
-	void getStudent_inputStudentIsNull_ThrowsAnIllegalArgumentException() {
+	void getStudent_inputStudentIdIsNull_ThrowsAnIllegalArgumentException() {
 		// Arrange
 		UUID studentId = null;
-
 
 		// Act - Assert
 		assertThrows(IllegalArgumentException.class, () -> {
@@ -120,7 +118,7 @@ class StudentControllerTest {
 		// Arrange
 		UUID studentId = UUID.fromString(TestUtils.STUDENT_UUID);
 
-		 doNothing().when(studentService).deleteStudent(studentId);
+		doNothing().when(studentService).deleteStudent(studentId);
 
 		// Act
 		ResponseEntity<Void> result = studentController.deleteStudent(studentId);
@@ -131,10 +129,9 @@ class StudentControllerTest {
 	}
 
 	@Test
-	void getStudent_inputStudentIsNull_ThrowsAnIllegalArgumentException_DeleteTheRecordFromDatabase() {
+	void deleteStudent_inputStudentIdIsNull_ThrowsAnIllegalArgumentException() {
 		// Arrange
 		UUID studentId = null;
-
 
 		// Act - Assert
 		assertThrows(IllegalArgumentException.class, () -> {
