@@ -1,6 +1,11 @@
 package com.selfStudy.LibrarySystemBackend.services;
 
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.util.Optional;
+import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,7 +33,7 @@ class IdentificationServiceImplTest {
 	IdentificationMapper identificationMapper;
 
 	@Test
-	 void createNewIdentification_WhenCallingCorrespondingApi_ReturnsTheCreatedIdentification() {
+	void createNewIdentification_WhenCallingCorrespondingApi_ReturnsTheCreatedIdentification() {
 		// Arrange
 		Identification expected = TestUtils.createIdentificationObject();
 		IdentificationDTO inputIdentification = TestUtils.createIdentificationDtoObject();
@@ -58,36 +63,40 @@ class IdentificationServiceImplTest {
 	// 	// Assert
 	// 	TestUtils.compareIdentificationObjects(expected, result);
 	// }
-	//
-	// @Test
-	// public void getIdentification_CallingGetIdentificationEndPointById_ReturnsTheIdentityIfExists() {
-	// 	// Arrange
-	// 	Identification expected = TestUtils.createIdentificationDtoObject();
-	//
-	//
-	// 	when(identificationRepository.findById(expected.getId())).thenReturn(Optional.of(expected));
-	//
-	// 	// Act
-	// 	IdentificationDTO result = identificationService.getIdentificationById(expected.getId());
-	//
-	// 	// Assert
-	// 	TestUtils.compareIdentificationObjects(expected, result);
-	// }
-	//
-	// @Test
-	// public void deleteIdentification_CallingDeleteIdentificationEndPointById_ReturnsTheIdentityIfExists() {
-	// 	// Arrange
-	// 	Identification expected = TestUtils.createIdentificationDtoObject();
-	//
-	//
-	// 	when(identificationRepository.findById(expected.getId())).thenReturn(Optional.of(expected));
-	// 	doNothing().when(identificationRepository).delete(expected);
-	//
-	// 	// Act
-	// 	identificationService.deleteIdentificationById(expected.getId());
-	//
-	// 	// Assert
-	// 	verify(identificationRepository).delete(expected);
-	// 	verify(identificationRepository).findById(expected.getId());
-	// }
+
+	@Test
+	public void getIdentification_CallingGetIdentificationEndPointById_ReturnsTheIdentityIfExists() {
+		// Arrange
+		UUID identificationId = UUID.fromString(TestUtils.IDENTIFICATION_UUID);
+		Identification expectedEntity = TestUtils.createIdentificationObject();
+		IdentificationDTO expected = TestUtils.createIdentificationDtoObject();
+
+		when(identificationMapper.mapIdentificationToDto(expectedEntity)).thenReturn(expected);
+		when(identificationRepository.findById(identificationId)).thenReturn(Optional.of(expectedEntity));
+
+		// Act
+		IdentificationDTO result = identificationService.getIdentificationById(expected.getId());
+
+		// Assert
+		TestUtils.compareIdentificationDtoObjects(expected, result);
+		verify(identificationRepository).findById(identificationId);
+		verify(identificationMapper).mapIdentificationToDto(expectedEntity);
+	}
+
+	@Test
+	public void deleteIdentification_CallingDeleteIdentificationEndPointById_ReturnsTheIdentityIfExists() {
+		// Arrange
+		UUID identificationId = UUID.fromString(TestUtils.IDENTIFICATION_UUID);
+		Identification expectedEntity = TestUtils.createIdentificationObject();
+
+		when(identificationRepository.findById(identificationId)).thenReturn(Optional.of(expectedEntity));
+		doNothing().when(identificationRepository).delete(expectedEntity);
+
+		// Act
+		identificationService.deleteIdentificationById(identificationId);
+
+		// Assert
+		verify(identificationRepository).delete(expectedEntity);
+		verify(identificationRepository).findById(identificationId);
+	}
 }
