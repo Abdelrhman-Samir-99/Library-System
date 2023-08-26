@@ -2,6 +2,7 @@ package com.selfStudy.LibrarySystemBackend.services.implementations;
 
 import java.util.UUID;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import com.selfStudy.LibrarySystemBackend.dtos.EmployeeDTO;
@@ -27,7 +28,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public EmployeeDTO updateEmployee(EmployeeDTO inputEmployee) {
-		return null;
+		Employee existingEmployee = employeeRepository.findById(inputEmployee.getId())
+											  .orElseThrow(() -> new ResourceNotFoundException(EMPLOYEE_RECORD_NOT_FOUND_WITH_ID + inputEmployee.getId()));
+
+		Employee inputEmployeeEntity = employeeMapper.mapEmployeeDtoToEmployee(inputEmployee);
+
+		BeanUtils.copyProperties(inputEmployee, existingEmployee);
+
+		existingEmployee = employeeRepository.save(existingEmployee);
+
+
+		return employeeMapper.mapEmployeeToEmployeeDto(existingEmployee);
 	}
 
 	@Override

@@ -58,7 +58,7 @@ class IdentificationControllerTest {
 	}
 
 	@Test
-	void updateIdentification_UpdatingSpecificIdentificationById_ReturnsTheUpdatedIdentityIfExists() {
+	void updateIdentification_UpdatingSpecificIdentification_ReturnsTheUpdatedIdentityIfExists() {
 		// Arrange
 		IdentificationDTO expected = TestUtils.createIdentificationDtoObject();
 

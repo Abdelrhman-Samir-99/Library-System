@@ -35,6 +35,43 @@ public class EmployeeServiceImplTest {
 	@Mock
 	EmployeeMapper employeeMapper;
 
+
+	@Test
+	void updateEmployee_UpdatingSpecificEmployeeIfExist_ReturnsTheUpdatedIdentityIfExists() {
+		// Arrange
+		EmployeeDTO inputEmployee = TestUtils.createEmployeeDtoObject();
+		Employee inputEmployeeEntity = TestUtils.createEmployeeObject();
+		EmployeeDTO expected = TestUtils.createEmployeeDtoObject();
+		Employee expectedEntity = TestUtils.createEmployeeObject();
+
+
+		when(employeeMapper.mapEmployeeDtoToEmployee(inputEmployee)).thenReturn(inputEmployeeEntity);
+		when(employeeRepository.findById(inputEmployee.getId())).thenReturn(Optional.of(expectedEntity));
+		when(employeeMapper.mapEmployeeToEmployeeDto(expectedEntity)).thenReturn(expected);
+		when(employeeRepository.save(expectedEntity)).thenReturn(expectedEntity);
+
+
+		// Act
+		EmployeeDTO result = employeeService.updateEmployee(expected);
+
+		// Assert
+		Assertions.assertEquals(expected, result);
+	}
+
+	@Test
+	void updateEmployee_inputEmployeeDoesNotExist_ThrowsAnIllegalArgumentException() {
+		// Arrange
+		EmployeeDTO inputEmployee = TestUtils.createEmployeeDtoObject();
+
+		when(employeeRepository.findById(inputEmployee.getId())).thenThrow(ResourceNotFoundException.class);
+
+
+		// Act - Assert
+		assertThrows(ResourceNotFoundException.class, () -> {
+			employeeService.updateEmployee(inputEmployee);
+		});
+	}
+
 	@Test
 	void getEmployeeById_CallingGetEmployeeEndPointById_ReturnsTheEntityIfExist() {
 		// Arrange
@@ -55,7 +92,7 @@ public class EmployeeServiceImplTest {
 	}
 
 	@Test
-	void getEmployeeById_IdentificationDoesNotExist_ThrowsResourceNotFoundException() {
+	void getEmployeeById_EmployeeIdDoesNotExist_ThrowsResourceNotFoundException() {
 		// Arrange
 		UUID employeeId = UUID.fromString(TestUtils.EMPLOYEE_UUID);
 

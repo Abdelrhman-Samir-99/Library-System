@@ -55,7 +55,7 @@ class IdentificationServiceImplTest {
 	}
 
 	@Test
-	void updateIdentification_CallingUpdateIdentificationEndPointById_ReturnsTheUpdatedIdentification() {
+	void updateIdentification_CallingUpdateIdentificationEndPoint_ReturnsTheUpdatedIdentification() {
 		// Arrange
 		IdentificationDTO inputIdentificationDto = TestUtils.createIdentificationDtoObject();
 		Identification inputIdentificationEntity = TestUtils.createIdentificationObject();
@@ -79,7 +79,7 @@ class IdentificationServiceImplTest {
 	}
 
 	@Test
-	void updateIdentification_StudentDtoDoesNotExist_ThrowsResourceNotFoundException() {
+	void updateIdentification_IdentificationDtoDoesNotExist_ThrowsResourceNotFoundException() {
 		// Arrange
 		IdentificationDTO inputIdentification = TestUtils.createIdentificationDtoObject();
 

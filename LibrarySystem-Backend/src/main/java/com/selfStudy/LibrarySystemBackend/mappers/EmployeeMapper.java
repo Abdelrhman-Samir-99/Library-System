@@ -9,4 +9,5 @@ import com.selfStudy.LibrarySystemBackend.models.Employee;
 public interface EmployeeMapper {
 
 	EmployeeDTO mapEmployeeToEmployeeDto(Employee employee);
+	Employee mapEmployeeDtoToEmployee(EmployeeDTO employeeDto);
 }
