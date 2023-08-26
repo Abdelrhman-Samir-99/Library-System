@@ -24,4 +24,13 @@ public class StudentController implements StudentApi {
 
 		return new ResponseEntity<>(studentService.createNewStudent(student), HttpStatus.CREATED);
 	}
+
+	@Override
+	public ResponseEntity<StudentDTO> updateStudent(StudentDTO inputStudent) {
+		if(inputStudent == null) {
+			throw new IllegalArgumentException("Identification ID is null");
+		}
+
+		return new ResponseEntity<>(studentService.updateStudent(inputStudent), HttpStatus.OK);
+	}
 }

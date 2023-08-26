@@ -11,4 +11,6 @@ import com.selfStudy.LibrarySystemBackend.dtos.StudentDTO;
 public interface StudentApi {
 	@PostMapping
 	ResponseEntity<StudentDTO> createNewStudent(@RequestBody StudentDTO student);
+
+	ResponseEntity<StudentDTO> updateStudent(StudentDTO inputStudent);
 }
