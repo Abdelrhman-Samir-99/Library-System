@@ -8,6 +8,7 @@ import java.util.UUID;
 import com.selfStudy.LibrarySystemBackend.dtos.EmployeeDTO;
 import com.selfStudy.LibrarySystemBackend.dtos.IdentificationDTO;
 import com.selfStudy.LibrarySystemBackend.dtos.StudentDTO;
+import com.selfStudy.LibrarySystemBackend.models.Employee;
 import com.selfStudy.LibrarySystemBackend.models.Identification;
 import com.selfStudy.LibrarySystemBackend.models.Student;
 
@@ -108,4 +109,18 @@ public class TestUtils {
 						  .build();
 	}
 
+	public static Employee createEmployeeObject() {
+		LocalDate dateNow = LocalDate.now();
+		Identification identification = createIdentificationObject();
+		return Employee.builder()
+						  .id(UUID.fromString(STUDENT_UUID))
+						  .joinDate(dateNow)
+						  .leaveDate(dateNow)
+						  .creationDate(dateNow)
+						  .removeDate(dateNow)
+						  .identification(identification)
+						  .profession("profession")
+						  .salary(1D)
+						  .build();
+	}
 }

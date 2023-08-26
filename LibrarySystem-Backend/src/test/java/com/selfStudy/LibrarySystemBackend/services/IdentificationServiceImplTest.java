@@ -126,7 +126,7 @@ class IdentificationServiceImplTest {
 	}
 
 	@Test
-	void deleteIdentificationById_CallingDeleteIdentificationEndPointById_ReturnsTheIdentityIfExists() {
+	void deleteIdentificationById_CallingDeleteIdentificationEndPointById_RemovesTheEntityIfExist() {
 		// Arrange
 		UUID identificationId = UUID.fromString(TestUtils.IDENTIFICATION_UUID);
 		Identification expectedEntity = TestUtils.createIdentificationObject();

@@ -118,7 +118,7 @@ class EmployeeControllerTest {
 		// Arrange
 		UUID employeeId = UUID.fromString(TestUtils.EMPLOYEE_UUID);
 
-		doNothing().when(employeeService).deleteEmployee(employeeId);
+		doNothing().when(employeeService).deleteEmployeeById(employeeId);
 
 		// Act
 		ResponseEntity<Void> result = employeeController.deleteEmployee(employeeId);

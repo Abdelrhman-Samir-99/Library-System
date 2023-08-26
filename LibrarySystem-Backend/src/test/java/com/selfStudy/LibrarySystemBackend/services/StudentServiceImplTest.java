@@ -128,7 +128,7 @@ class StudentServiceImplTest {
 	}
 
 	@Test
-	void deleteStudent_FetchingTheStudentById_ReturnsTheSpecifiedStudentIfExist() {
+	void deleteStudent_FetchingTheStudentById_RemovesTheSpecifiedStudentIfExist() {
 		// Arrange
 		UUID studentId = UUID.fromString(TestUtils.STUDENT_UUID);
 		Student expectedEntity = TestUtils.createStudentObject();

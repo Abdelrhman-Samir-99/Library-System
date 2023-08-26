@@ -51,7 +51,7 @@ public class EmployeeController implements EmployeeApi {
 			throw new IllegalArgumentException(EMPLOYEE_ID_IS_MISSING);
 		}
 
-		employeeService.deleteEmployee(employeeId);
+		employeeService.deleteEmployeeById(employeeId);
 
 		return ResponseEntity.noContent().build();
 	}

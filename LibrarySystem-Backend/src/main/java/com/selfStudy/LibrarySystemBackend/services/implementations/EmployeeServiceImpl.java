@@ -5,6 +5,8 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import com.selfStudy.LibrarySystemBackend.dtos.EmployeeDTO;
+import com.selfStudy.LibrarySystemBackend.exceptions.ResourceNotFoundException;
+import com.selfStudy.LibrarySystemBackend.models.Employee;
 import com.selfStudy.LibrarySystemBackend.repositories.EmployeeRepository;
 import com.selfStudy.LibrarySystemBackend.services.interfaces.EmployeeService;
 
@@ -32,7 +34,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public void deleteEmployee(UUID employeeId) {
+	public void deleteEmployeeById(UUID employeeId) {
+		Employee employee = employeeRepository.findById(employeeId)
+											 .orElseThrow(() -> new ResourceNotFoundException(EMPLOYEE_RECORD_NOT_FOUND_WITH_ID + employeeId));
 
+		employeeRepository.delete(employee);
 	}
 }
