@@ -1,5 +1,6 @@
 package com.selfStudy.LibrarySystemBackend.controllers;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Assertions;
@@ -42,4 +43,14 @@ public class EmployeeControllerTest {
 		Assertions.assertEquals(HttpStatus.CREATED, result.getStatusCode());
 	}
 
+	@Test
+	void createNewEmployee_inputIdentificationDtoIsNull_ThrowsAnIllegalArgumentException() {
+		// Arrange
+		EmployeeDTO inputEmployee = null;
+
+		// Act - Assert
+		assertThrows(IllegalArgumentException.class, () -> {
+			employeeController.createNewEmployee(inputEmployee);
+		});
+	}
 }

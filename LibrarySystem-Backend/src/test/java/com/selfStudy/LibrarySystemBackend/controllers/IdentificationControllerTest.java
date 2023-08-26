@@ -47,7 +47,7 @@ class IdentificationControllerTest {
 	}
 
 	@Test
-	void createIdentification_inputIdentificationDtoIsNull_ThrowsAnIllegalArgumentException() {
+	void createNewIdentification_inputIdentificationDtoIsNull_ThrowsAnIllegalArgumentException() {
 		// Arrange
 		IdentificationDTO inputIdentification = null;
 
