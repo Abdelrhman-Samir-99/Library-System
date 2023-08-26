@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.selfStudy.LibrarySystemBackend.dtos.IdentificationDTO;
 import com.selfStudy.LibrarySystemBackend.exceptions.ResourceNotFoundException;
@@ -23,12 +24,22 @@ public class IdentificationServiceImpl implements IdentificationService {
 	private final IdentificationMapper identificationMapper;
 
 
+	@Transactional
 	@Override
 	public IdentificationDTO createNewIdentification(IdentificationDTO identificationDto) {
 		Identification identification = identificationMapper.mapDtoToIdentification(identificationDto);
 		return identificationMapper.mapIdentificationToDto(identificationRepository.save(identification));
 	}
 
+
+	@Override
+	public IdentificationDTO getIdentificationById(UUID identificationId) {
+		Identification identification = identificationRepository.findById(identificationId)
+																.orElseThrow(() -> new ResourceNotFoundException(RECORD_NOT_FOUND_WITH_ID + identificationId));
+		return identificationMapper.mapIdentificationToDto(identification);
+	}
+
+	@Transactional
 	@Override
 	public IdentificationDTO updateIdentification(IdentificationDTO identificationDto) {
 		Optional<Identification> optionalIdentification = identificationRepository.findById(identificationDto.getId());
@@ -42,13 +53,8 @@ public class IdentificationServiceImpl implements IdentificationService {
 		return identificationMapper.mapIdentificationToDto(identificationRepository.save(existedIdentification));
 	}
 
-	@Override
-	public IdentificationDTO getIdentificationById(UUID identificationId) {
-		Identification identification = identificationRepository.findById(identificationId)
-								   .orElseThrow(() -> new ResourceNotFoundException(RECORD_NOT_FOUND_WITH_ID + identificationId));
-		return identificationMapper.mapIdentificationToDto(identification);
-	}
 
+	@Transactional
 	@Override
 	public void deleteIdentificationById(UUID identificationId) {
 		Identification existedIdentification = identificationRepository.findById(identificationId)

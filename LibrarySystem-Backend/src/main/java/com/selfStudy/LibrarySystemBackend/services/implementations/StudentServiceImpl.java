@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.selfStudy.LibrarySystemBackend.dtos.StudentDTO;
 import com.selfStudy.LibrarySystemBackend.exceptions.ResourceNotFoundException;
@@ -21,6 +22,7 @@ public class StudentServiceImpl implements StudentService {
 	private final StudentRepository studentRepository;
 	private final StudentMapper studentMapper;
 
+	@Transactional
 	@Override
 	public StudentDTO createNewStudent(StudentDTO studentDto) {
 		Student student = studentMapper.mapStudentDtoToStudent(studentDto);
@@ -28,6 +30,14 @@ public class StudentServiceImpl implements StudentService {
 		return studentMapper.mapStudentToStudentDto(studentRepository.save(student));
 	}
 
+	@Override
+	public StudentDTO getStudent(UUID studentId) {
+		Student student = studentRepository.findById(studentId)
+										   .orElseThrow(() -> new ResourceNotFoundException(STUDENT_NOT_FOUND_WITH_ID + studentId));
+		return studentMapper.mapStudentToStudentDto(student);
+	}
+
+	@Transactional
 	@Override
 	public StudentDTO updateStudent(StudentDTO inputStudent) {
 		Student existingStudent = studentRepository.findById(inputStudent.getId())
@@ -43,12 +53,6 @@ public class StudentServiceImpl implements StudentService {
 		return studentMapper.mapStudentToStudentDto(existingStudent);
 	}
 
-	@Override
-	public StudentDTO getStudent(UUID studentId) {
-		Student student = studentRepository.findById(studentId)
-										   .orElseThrow(() -> new ResourceNotFoundException(STUDENT_NOT_FOUND_WITH_ID + studentId));
-		return studentMapper.mapStudentToStudentDto(student);
-	}
 
 	@Override
 	public void deleteStudent(UUID studentId) {
