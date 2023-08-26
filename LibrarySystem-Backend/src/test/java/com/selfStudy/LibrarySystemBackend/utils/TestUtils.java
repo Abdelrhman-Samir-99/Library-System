@@ -5,12 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import com.selfStudy.LibrarySystemBackend.dtos.EmployeeDTO;
 import com.selfStudy.LibrarySystemBackend.dtos.IdentificationDTO;
 import com.selfStudy.LibrarySystemBackend.dtos.StudentDTO;
 import com.selfStudy.LibrarySystemBackend.models.Identification;
 import com.selfStudy.LibrarySystemBackend.models.Student;
 
 public class TestUtils {
+
 	public static final String IDENTIFICATION_UUID = "77365c0c-3867-11ee-be56-0242ac120002";
 	public static final String STUDENT_UUID = "9fbe6561-586c-423a-9706-cf1989762d5a";
 
@@ -32,27 +34,11 @@ public class TestUtils {
 		assertEquals(expected.getLastName(), result.getLastName());
 	}
 
-	public static void compareIdentificationObjects(Identification expected, Identification result) {
-		assertEquals(expected.getId(), result.getId());
-		assertEquals(expected.getSocialNumber(), result.getSocialNumber());
-		assertEquals(expected.getPhoneNumber(), result.getPhoneNumber());
-		assertEquals(expected.getEmail(), result.getEmail());
-		assertEquals(expected.getFirstName(), result.getFirstName());
-		assertEquals(expected.getLastName(), result.getLastName());
-	}
-
-	public static void compareStudentObjects(Student expected, Student result) {
+	public static void compareEmployeeDtoObjects(EmployeeDTO expected, EmployeeDTO result) {
 		assertEquals(expected.getId(), result.getId());
 		assertEquals(expected.getJoinDate(), result.getJoinDate());
-		assertEquals(expected.getGraduationDate(), result.getGraduationDate());
-		compareIdentificationObjects(expected.getIdentification(), result.getIdentification());
-	}
-
-	public static void compareStudentWithStudentDtoObjects(Student expected, StudentDTO result) {
-		assertEquals(expected.getId(), result.getId());
-		assertEquals(expected.getJoinDate(), result.getJoinDate());
-		assertEquals(expected.getGraduationDate(), result.getGraduationDate());
-		assertEquals(expected.getIdentification().getId(), result.getIdentificationId());
+		assertEquals(expected.getLeaveDate(), result.getLeaveDate());
+		assertEquals(expected.getIdentificationId(), result.getIdentificationId());
 	}
 
 	public static void compareStudentDtoObjects(StudentDTO expected, StudentDTO result) {
@@ -75,13 +61,13 @@ public class TestUtils {
 
 	public static Identification createIdentificationObject() {
 		return Identification.builder()
-								.id(UUID.fromString(IDENTIFICATION_UUID))
-								.socialNumber("123-323-232-1231")
-								.phoneNumber("01273188179")
-								.email("testing@yopamail.com")
-								.firstName("Abdelrahman")
-								.lastName("Samir")
-								.build();
+							 .id(UUID.fromString(IDENTIFICATION_UUID))
+							 .socialNumber("123-323-232-1231")
+							 .phoneNumber("01273188179")
+							 .email("testing@yopamail.com")
+							 .firstName("Abdelrahman")
+							 .lastName("Samir")
+							 .build();
 	}
 
 	public static Student createStudentObject() {
@@ -97,12 +83,28 @@ public class TestUtils {
 
 	public static StudentDTO createStudentDtoObject() {
 		LocalDate dateNow = LocalDate.now();
-		Identification identification = new Identification();
 		return StudentDTO.builder()
-					  .id(UUID.fromString(STUDENT_UUID))
-					  .joinDate(dateNow)
-					  .graduationDate(dateNow)
-					  .identificationId(UUID.fromString(IDENTIFICATION_UUID))
-					  .build();
+						 .id(UUID.fromString(STUDENT_UUID))
+						 .joinDate(dateNow)
+						 .graduationDate(dateNow)
+						 .identificationId(UUID.fromString(IDENTIFICATION_UUID))
+						 .build();
 	}
+
+	public static EmployeeDTO createEmployeeDtoObject() {
+		LocalDate dateNow = LocalDate.now();
+		return EmployeeDTO.builder()
+						  .id(UUID.fromString(STUDENT_UUID))
+						  .firstName("firstName")
+						  .lastName("lastName")
+						  .joinDate(dateNow)
+						  .leaveDate(dateNow)
+						  .creationDate(dateNow)
+						  .removeDate(dateNow)
+						  .identificationId(UUID.fromString(IDENTIFICATION_UUID))
+						  .profession("profession")
+						  .salary(1D)
+						  .build();
+	}
+
 }

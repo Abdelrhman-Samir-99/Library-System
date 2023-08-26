@@ -38,6 +38,8 @@ public class Employee implements Serializable {
 	private Identification identification;
 	private LocalDate joinDate;
 	private LocalDate leaveDate;
+	private LocalDate creationDate;
+	private LocalDate removeDate;
 	private String profession; // consider if the relation many to many.
 	private Double salary;
 }
