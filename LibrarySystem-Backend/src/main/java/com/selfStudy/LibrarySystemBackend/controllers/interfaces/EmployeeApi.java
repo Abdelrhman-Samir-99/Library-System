@@ -3,6 +3,7 @@ package com.selfStudy.LibrarySystemBackend.controllers.interfaces;
 import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -24,4 +25,7 @@ public interface EmployeeApi {
 
 	@GetMapping
 	ResponseEntity<EmployeeDTO> getEmployee(UUID employeeId);
+
+	@DeleteMapping
+	ResponseEntity<Void> deleteEmployee(UUID employeeId);
 }

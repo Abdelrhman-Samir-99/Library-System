@@ -30,4 +30,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public EmployeeDTO getEmployee(UUID employeeId) {
 		return null;
 	}
+
+	@Override
+	public void deleteEmployee(UUID employeeId) {
+
+	}
 }

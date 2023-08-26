@@ -44,4 +44,15 @@ public class EmployeeController implements EmployeeApi {
 
 		return new ResponseEntity<>(employeeService.getEmployee(employeeId), HttpStatus.FOUND);
 	}
+
+	@Override
+	public ResponseEntity<Void> deleteEmployee(UUID employeeId) {
+		if(employeeId == null) {
+			throw new IllegalArgumentException(EMPLOYEE_ID_IS_MISSING);
+		}
+
+		employeeService.deleteEmployee(employeeId);
+
+		return ResponseEntity.noContent().build();
+	}
 }

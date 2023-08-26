@@ -1,6 +1,7 @@
 package com.selfStudy.LibrarySystemBackend.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 import java.util.UUID;
@@ -109,6 +110,32 @@ class EmployeeControllerTest {
 		// Act - Assert
 		assertThrows(IllegalArgumentException.class, () -> {
 			employeeController.getEmployee(employeeId);
+		});
+	}
+
+	@Test
+	void deleteEmployee_UpdateExistingEmployee_ReturnsTheUpdatedEmployeeIfExist() {
+		// Arrange
+		UUID employeeId = UUID.fromString(TestUtils.EMPLOYEE_UUID);
+
+		doNothing().when(employeeService).deleteEmployee(employeeId);
+
+		// Act
+		ResponseEntity<Void> result = employeeController.deleteEmployee(employeeId);
+
+		// Assert
+
+		Assertions.assertEquals(HttpStatus.NO_CONTENT, result.getStatusCode());
+	}
+
+	@Test
+	void deleteEmployee_inputEmployeeDtoIsNull_ThrowsAnIllegalArgumentException() {
+		// Arrange
+		UUID employeeId = null;
+
+		// Act - Assert
+		assertThrows(IllegalArgumentException.class, () -> {
+			employeeController.deleteEmployee(employeeId);
 		});
 	}
 
