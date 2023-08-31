@@ -31,3 +31,22 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: cd LibrarySystem-Backend && mvn clean compile verify package --file pom.xml
+
+    - name: Check test results
+      id: tests
+      run: |
+        if [[ ${{ job.status }} != 'success' ]]; then
+          echo "Tests failed"
+          echo "::set-output name=tests_failed::true"
+        else
+          echo "Tests passed"
+          echo "::set-output name=tests_failed::false"
+        fi
+      continue-on-error: true
+
+    - name: Rollback on test failure
+      if: steps.tests.outputs.tests_failed == 'true'
+      run: |
+        # Revert the last commit
+        git revert HEAD --no-edit
+        git push origin main
