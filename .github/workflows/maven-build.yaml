@@ -37,16 +37,15 @@ jobs:
       run: |
         if [[ ${{ job.status }} != 'success' ]]; then
           echo "Tests failed"
-          echo "::set-output name=tests_failed::true"
+          echo "tests_failed=true" >> $GITHUB_ENV
         else
           echo "Tests passed"
-          echo "::set-output name=tests_failed::false"
-        fi
-      continue-on-error: true
+          echo "tests_failed=false" >> $GITHUB_ENV
 
     - name: Rollback on test failure
-      if: steps.tests.outputs.tests_failed == 'true'
       run: |
-        # Revert the last commit
-        git revert HEAD --no-edit
-        git push origin main
+        if [ "$tests_failed" == "true" ]; then
+          # Revert the last commit
+          git revert HEAD --no-edit
+          git push origin main
+        fi
