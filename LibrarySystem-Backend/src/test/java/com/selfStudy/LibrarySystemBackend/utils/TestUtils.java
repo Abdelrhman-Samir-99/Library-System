@@ -74,22 +74,25 @@ public class TestUtils {
 
 	public static Student createStudentObject() {
 		LocalDate dateNow = LocalDate.now();
-		Identification identification = new Identification();
+		Identification identification = createIdentificationObject();
 		return Student.builder()
 					  .id(UUID.fromString(IDENTIFICATION_UUID))
 					  .joinDate(dateNow)
 					  .graduationDate(dateNow)
+				.creationDate(dateNow)
+				.removeDate(dateNow)
 					  .identification(identification)
 					  .build();
 	}
 
 	public static StudentDTO createStudentDtoObject() {
 		LocalDate dateNow = LocalDate.now();
+		Identification identification = createIdentificationObject();
 		return StudentDTO.builder()
 						 .id(UUID.fromString(STUDENT_UUID))
 						 .joinDate(dateNow)
 						 .graduationDate(dateNow)
-						 .identificationId(UUID.fromString(IDENTIFICATION_UUID))
+						 .identificationId(identification.getId())
 						 .build();
 	}
 
@@ -122,5 +125,19 @@ public class TestUtils {
 						  .profession("profession")
 						  .salary(1D)
 						  .build();
+	}
+
+	public static void compareStudentWithStudentDtoObject(Student expected, StudentDTO result) {
+		assertEquals(expected.getId(), result.getId());
+		assertEquals(expected.getJoinDate(), result.getJoinDate());
+		assertEquals(expected.getGraduationDate(), result.getGraduationDate());
+		assertEquals(expected.getIdentification().getId(), result.getIdentificationId());
+	}
+
+	public static void compareEmployeeWithEmployeeDtoObject(Employee expected, EmployeeDTO result) {
+		assertEquals(expected.getId(), result.getId());
+		assertEquals(expected.getJoinDate(), result.getJoinDate());
+		assertEquals(expected.getLeaveDate(), result.getLeaveDate());
+		assertEquals(expected.getIdentification().getId(), result.getIdentificationId());
 	}
 }
